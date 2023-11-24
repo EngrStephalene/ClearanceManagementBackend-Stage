@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/faculty")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("clearance-management-frontend-stage.vercel.app")
 @AllArgsConstructor
 public class FacultyController {
 

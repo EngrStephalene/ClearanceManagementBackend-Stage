@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/violation")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("clearance-management-frontend-stage.vercel.app")
 public class ViolationController {
 
     @Autowired
