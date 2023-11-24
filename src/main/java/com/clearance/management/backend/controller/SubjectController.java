@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/subject")
-@CrossOrigin("clearance-management-frontend-stage.vercel.app")
+@CrossOrigin("https://clearance-management-frontend-stage.vercel.app")
 public class SubjectController {
 
     @Autowired

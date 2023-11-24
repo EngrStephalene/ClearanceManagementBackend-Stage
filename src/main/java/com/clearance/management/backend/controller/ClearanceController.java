@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/clearance")
-@CrossOrigin("clearance-management-frontend-stage.vercel.app")
+@CrossOrigin("https://clearance-management-frontend-stage.vercel.app")
 public class ClearanceController {
 
     @Autowired
