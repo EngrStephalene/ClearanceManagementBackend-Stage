@@ -17,4 +17,6 @@ public interface ClearanceService {
     public ClearanceDto markAsApprove(Integer id);
 
     public ClearanceDto markAsReject(Integer id, String remarks);
+
+    public List<ClearanceDto> getClearanceByFacultyId(Integer facultyId);
 }

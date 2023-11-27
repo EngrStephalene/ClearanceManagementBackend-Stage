@@ -132,4 +132,14 @@ public class ClearanceServiceImpl implements ClearanceService {
         Clearance savedClearance = clearanceRepository.save(clearanceForSave);
         return modelMapper.map(savedClearance, ClearanceDto.class);
     }
+
+    @Override
+    public List<ClearanceDto> getClearanceByFacultyId(Integer facultyId) {
+        List<Clearance> clearanceList = clearanceRepository.findClearanceByFacultyId(facultyId.toString())
+                .orElseThrow(() -> new ResourceNotFoundException("Clearance for faculty " + facultyId + " not found."));
+        return clearanceList
+                .stream()
+                .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
+                .collect(Collectors.toList());
+    }
 }

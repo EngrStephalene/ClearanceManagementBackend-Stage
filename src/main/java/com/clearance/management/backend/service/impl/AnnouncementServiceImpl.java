@@ -38,7 +38,7 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public List<AnnouncementDto> getAllAnnouncement() {
-        List<Announcement> announcementList = announcementRepository.findAll();
+        List<Announcement> announcementList = announcementRepository.findAllByOrderByReportedDateDesc();
         return announcementList
                 .stream()
                 .map((announcement) -> modelMapper.map(announcement, AnnouncementDto.class))

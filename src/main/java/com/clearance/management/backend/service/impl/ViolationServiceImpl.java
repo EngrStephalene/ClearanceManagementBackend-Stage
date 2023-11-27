@@ -1,9 +1,6 @@
 package com.clearance.management.backend.service.impl;
 
-import com.clearance.management.backend.dto.FacultyDto;
-import com.clearance.management.backend.dto.StudentDto;
-import com.clearance.management.backend.dto.ViolationDto;
-import com.clearance.management.backend.dto.ViolationRequest;
+import com.clearance.management.backend.dto.*;
 import com.clearance.management.backend.entity.Faculty;
 import com.clearance.management.backend.entity.Student;
 import com.clearance.management.backend.entity.Violation;
@@ -18,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,12 +76,39 @@ public class ViolationServiceImpl implements ViolationService {
     }
 
     @Override
-    public List<ViolationDto> getAllViolation() {
+    public List<ViolationWithStudentNameDto> getAllViolation() {
         List<Violation> violationList = violationRepository.findAll();
-        return violationList
+        List<ViolationDto> violationDtoList = new ArrayList<ViolationDto>();
+        List<ViolationWithStudentNameDto> violationWithStudentNameDtoList = new ArrayList<ViolationWithStudentNameDto>();
+        violationDtoList = violationList
                 .stream()
                 .map((violation) -> modelMapper.map(violation, ViolationDto.class))
                 .collect(Collectors.toList());
+        for(ViolationDto violationDto: violationDtoList) {
+            ViolationWithStudentNameDto violationWithStudentNameDto = getViolationWithStudentNameDto(violationDto);
+            violationWithStudentNameDtoList.add(violationWithStudentNameDto);
+        }
+        return violationWithStudentNameDtoList;
+    }
+
+    private ViolationWithStudentNameDto getViolationWithStudentNameDto(ViolationDto violationDto) {
+        ViolationWithStudentNameDto violationWithStudentNameDto = new ViolationWithStudentNameDto();
+        violationWithStudentNameDto.setId(violationDto.getId());
+        violationWithStudentNameDto.setStudentId(violationDto.getStudentId());
+        violationWithStudentNameDto.setDescription(violationDto.getDescription());
+        violationWithStudentNameDto.setActionItem(violationDto.getActionItem());
+        violationWithStudentNameDto.setLogDate(violationDto.getLogDate());
+        violationWithStudentNameDto.setCompleted(violationDto.isCompleted());
+        violationWithStudentNameDto.setFacultyId(violationDto.getFacultyId());
+        violationWithStudentNameDto.setUpdatedDate(violationDto.getUpdatedDate());
+        Student student = studentRepository.findStudentByStudentNumber(violationDto.getStudentId())
+                .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + violationDto.getStudentId() + " not found."));
+        StringBuilder sb = new StringBuilder();
+        sb.append(student.getFirstName());
+        sb.append(" ");
+        sb.append(student.getLastName());
+        violationWithStudentNameDto.setStudentName(sb.toString());
+        return violationWithStudentNameDto;
     }
 
     @Override

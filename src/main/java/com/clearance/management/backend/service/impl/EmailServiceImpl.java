@@ -149,7 +149,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n\nUsername: " + username +
                 "\nTemporary Password: " + password +
                 "\n\nFor security reasons, we recommend that you change your password as soon as you log in to the system. To do so, please follow these steps:"+
-                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website http://localhost:3000."+
+                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website https://clearance-management-frontend-stage.vercel.app"+
                 "\n2. Click on the \"Login\" button."+
                 "\n3. Enter your provided username and temporary password."+
                 "\n4. Click the 'Profile' menu in the sidebar."+
@@ -176,7 +176,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n\nUsername: " + username +
                 "\nTemporary Password: " + password +
                 "\n\nFor security reasons, we recommend that you change your password as soon as you log in to the system. To do so, please follow these steps:"+
-                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website http://localhost:3000."+
+                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website https://clearance-management-frontend-stage.vercel.app"+
                 "\n2. Click on the \"Login\" button."+
                 "\n3. Enter your provided username and temporary password."+
                 "\n4. Click the 'Profile' menu in the sidebar."+

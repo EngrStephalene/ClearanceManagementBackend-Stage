@@ -21,10 +21,10 @@ public class ClearanceController {
     @Autowired
     ClearanceService clearanceService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ROLE_FACULTY_HEAD'," +
-            " 'ROLE_TREASURER', 'ROLE_CHAIRMAN', 'ROLE_SG_ADVISER', 'ROLE_CAMPUS_MINISTRY', " +
-            "'ROLE_GUIDANCE_OFFICE', 'ROLE_LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'ROLE_PROPERTY_CUSTODIAN', 'ROLE_PREFECT_DISCIPLINE', 'ROLE_REGISTRAR', 'ROLE_FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @GetMapping("/")
     public ResponseEntity<List<ClearanceDto>> getAllClearance() {
         System.out.println("GET ALL Clearance API is called.");
@@ -40,6 +40,17 @@ public class ClearanceController {
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @GetMapping("/faculty/{facultyId}")
+    public ResponseEntity<List<ClearanceDto>> getClearanceByFacultyId(@PathVariable("facultyId") Integer facultyId) {
+        System.out.println("GET CLEARANCE BY STUDENT ID API is called.");
+        List<ClearanceDto> clearanceDtoList = clearanceService.getClearanceByFacultyId(facultyId);
+        return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasAnyRole('STUDENT', 'FACULTY')")
     @DeleteMapping("{studentId}")
     public ResponseEntity<String> deleteClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
@@ -48,10 +59,10 @@ public class ClearanceController {
         return new ResponseEntity<>("Successfully deleted clearances.", HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ROLE_FACULTY_HEAD', 'FACULTY'," +
-            " 'ROLE_TREASURER', 'ROLE_CHAIRMAN', 'ROLE_SG_ADVISER', 'ROLE_CAMPUS_MINISTRY', " +
-            "'ROLE_GUIDANCE_OFFICE', 'ROLE_LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'ROLE_PROPERTY_CUSTODIAN', 'ROLE_PREFECT_DISCIPLINE', 'ROLE_REGISTRAR', 'ROLE_FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @PatchMapping("{id}")
     public ResponseEntity<ClearanceDto> markClearanceAsApprove(@PathVariable("id") Integer id) {
         System.out.println("MARK CLEARANCE AS APPROVE API is called.");
@@ -59,10 +70,10 @@ public class ClearanceController {
         return new ResponseEntity<>(updatedClearance, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ROLE_FACULTY_HEAD', 'FACULTY'," +
-            " 'ROLE_TREASURER', 'ROLE_CHAIRMAN', 'ROLE_SG_ADVISER', 'ROLE_CAMPUS_MINISTRY', " +
-            "'ROLE_GUIDANCE_OFFICE', 'ROLE_LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'ROLE_PROPERTY_CUSTODIAN', 'ROLE_PREFECT_DISCIPLINE', 'ROLE_REGISTRAR', 'ROLE_FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @PatchMapping("/reject")
     public ResponseEntity<ClearanceDto> markClearanceAsReject(@PathVariable("id") Integer id, @RequestBody String remarks) {
         System.out.println("MARK CLEARANCE AS REJECT API is called.");
