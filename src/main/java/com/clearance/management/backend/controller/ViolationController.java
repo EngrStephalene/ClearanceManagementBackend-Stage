@@ -40,10 +40,7 @@ public class ViolationController {
         return new ResponseEntity<>(violationDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE', 'STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/student-violation/{studentNumber}")
     public ResponseEntity<List<ViolationDto>> getViolationsByStudentNumber(@PathVariable("studentNumber") Integer studentNumber) {
         System.out.println("GET VIOLATION BY STUDENT ID API IS CALLED.");
@@ -51,10 +48,7 @@ public class ViolationController {
         return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE', 'STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     @GetMapping("/get/{studentId}")
     public ResponseEntity<List<ViolationDto>> getViolationByStudentId(@PathVariable("studentId") Integer studentId) {
         System.out.println("GET VIOLATION BY STUDENT ID API IS CALLED.");
