@@ -3,6 +3,7 @@ package com.clearance.management.backend.controller;
 import com.clearance.management.backend.dto.FacultyDto;
 import com.clearance.management.backend.request.AppUserRoleRequest;
 import com.clearance.management.backend.request.FacultyRequest;
+import com.clearance.management.backend.request.UpdateFacultyRequest;
 import com.clearance.management.backend.service.FacultyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +68,8 @@ public class FacultyController {
         return new ResponseEntity<>(facultyDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY', 'FACULTY_HEAD'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
-    @PutMapping("{id}")
-    public ResponseEntity<FacultyDto> updateFaculty(@RequestBody FacultyDto request, @PathVariable("id") Integer id) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<FacultyDto> updateFaculty(@PathVariable("id") Integer id, @RequestBody UpdateFacultyRequest request) {
         System.out.println("UPDATE faculty api is called.");
         FacultyDto updatedFaculty = facultyService.updateFaculty(request, id);
         return new ResponseEntity<>(updatedFaculty, HttpStatus.OK);
@@ -87,7 +84,7 @@ public class FacultyController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFaculty(@PathVariable("id") Integer id) {
         System.out.println("DELETE faculty api is called.");
         facultyService.deleteFaculty(id);

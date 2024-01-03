@@ -149,7 +149,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n\nUsername: " + username +
                 "\nTemporary Password: " + password +
                 "\n\nFor security reasons, we recommend that you change your password as soon as you log in to the system. To do so, please follow these steps:"+
-                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website https://clearance-management-frontend-stage.vercel.app"+
+                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website http://localhost:3000."+
                 "\n2. Click on the \"Login\" button."+
                 "\n3. Enter your provided username and temporary password."+
                 "\n4. Click the 'Profile' menu in the sidebar."+
@@ -176,7 +176,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n\nUsername: " + username +
                 "\nTemporary Password: " + password +
                 "\n\nFor security reasons, we recommend that you change your password as soon as you log in to the system. To do so, please follow these steps:"+
-                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website https://clearance-management-frontend-stage.vercel.app"+
+                "\n1. Visit the SAINT FRANCIS COLLEGE - GUIHULNGAN CLEARANCE MANAGEMENT SYSTEM website http://localhost:3000."+
                 "\n2. Click on the \"Login\" button."+
                 "\n3. Enter your provided username and temporary password."+
                 "\n4. Click the 'Profile' menu in the sidebar."+
@@ -200,7 +200,7 @@ public class EmailServiceImpl implements EmailService {
                 "\n\nYour student information has been successfully updated." +
                 "Kindly verify if this is correct; otherwise kindly update your information on the site." +
                 "\n\nStudent Firstname: " + studentDto.getFirstName() +
-                "\n\nStudent Middlename: " + studentDto.getEmail() +
+                "\n\nStudent Middlename: " + studentDto.getMiddleName() +
                 "\n\nStudent Lastname: " + studentDto.getLastName() +
                 "\n\nStudent Email Address: " + email +
                 "\n\nStudent Address: " + studentDto.getAddress() +

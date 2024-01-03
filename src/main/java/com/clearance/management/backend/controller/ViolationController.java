@@ -21,6 +21,17 @@ public class ViolationController {
     @Autowired
     ViolationService violationService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'FACULTY', 'FACULTY_HEAD'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @GetMapping("/")
+    public ResponseEntity<List<ViolationWithStudentNameDto>> getAllViolation() {
+        System.out.println("GET ALL VIOLATION API IS CALLED.");
+        List<ViolationWithStudentNameDto> violationDtoList =  violationService.getAllViolation();
+        return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     @PostMapping("/add/{studentNumber}")
     public ResponseEntity<ViolationDto> addViolation(@RequestBody ViolationRequest request,
@@ -43,14 +54,6 @@ public class ViolationController {
         System.out.println("GET VIOLATION BY STUDENT ID API IS CALLED.");
         List<ViolationDto> violationDtoList = violationService.getStudentViolationByStudentId(studentId);
         System.out.println(violationDtoList);
-        return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY', 'STUDENT')")
-    @GetMapping("/")
-    public ResponseEntity<List<ViolationWithStudentNameDto>> getAllViolation() {
-        System.out.println("GET ALL VIOLATION API IS CALLED.");
-        List<ViolationWithStudentNameDto> violationDtoList =  violationService.getAllViolation();
         return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
     }
 

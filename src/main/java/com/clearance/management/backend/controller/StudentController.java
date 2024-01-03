@@ -2,6 +2,7 @@ package com.clearance.management.backend.controller;
 
 import com.clearance.management.backend.dto.StudentDto;
 import com.clearance.management.backend.entity.Student;
+import com.clearance.management.backend.request.UpdateStudentRequest;
 import com.clearance.management.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,15 +87,15 @@ public class StudentController {
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<StudentDto> updateStudent(@RequestBody StudentDto request, @PathVariable("id") Integer id) {
+    @PutMapping("/update")
+    public ResponseEntity<StudentDto> updateStudent(@RequestBody UpdateStudentRequest request) {
         System.out.println("UPDATE student api is called.");
-        StudentDto updatedStudent = studentService.updateStudent(request, id);
+        StudentDto updatedStudent = studentService.updateStudent(request);
         return new ResponseEntity<>(updatedStudent, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") Integer id) {
         System.out.println("DELETE student api is called.");
         studentService.deleteStudent(id);

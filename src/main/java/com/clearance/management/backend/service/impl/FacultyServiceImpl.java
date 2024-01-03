@@ -9,6 +9,7 @@ import com.clearance.management.backend.repository.ApplicationUserRepository;
 import com.clearance.management.backend.repository.FacultyRepository;
 import com.clearance.management.backend.request.AppUserRoleRequest;
 import com.clearance.management.backend.request.FacultyRequest;
+import com.clearance.management.backend.request.UpdateFacultyRequest;
 import com.clearance.management.backend.service.AuthenticationService;
 import com.clearance.management.backend.service.EmailService;
 import com.clearance.management.backend.service.FacultyService;
@@ -113,9 +114,15 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public FacultyDto updateFaculty(FacultyDto request, Integer id) {
-        Faculty faculty = facultyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Faculty with id " + id + " not found."));
+    public FacultyDto updateFaculty(UpdateFacultyRequest request, Integer id) {
+        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with user ID: " + id + " not found."));
+        if(!applicationUser.getEmail().equals(request.getEmail())) {
+            applicationUser.setEmail(request.getEmail());
+            applicationUserRepository.save(applicationUser);
+        }
+        Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
+                        .orElseThrow(() -> new ResourceNotFoundException("Faculty with ID: " + applicationUser.getId() + " not found."));
         faculty.setFacultyNumber(request.getFacultyNumber());
         faculty.setEmail(request.getEmail());
         faculty.setFirstName(request.getFirstName());
@@ -138,9 +145,9 @@ public class FacultyServiceImpl implements FacultyService {
 
     @Override
     public void deleteFaculty(Integer id) {
-        Faculty faculty = facultyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Faculty with faculty id: " + id + "not found"));
-        facultyRepository.deleteById(id);
+        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(("User with ID: " + id + " not found.")));
+        applicationUserRepository.deleteById(applicationUser.getId());
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.clearance.management.backend.entity.Violation;
 import com.clearance.management.backend.exception.ResourceNotFoundException;
 import com.clearance.management.backend.repository.ApplicationUserRepository;
 import com.clearance.management.backend.repository.StudentRepository;
+import com.clearance.management.backend.request.UpdateStudentRequest;
 import com.clearance.management.backend.service.AuthenticationService;
 import com.clearance.management.backend.service.EmailService;
 import com.clearance.management.backend.service.StudentService;
@@ -88,13 +89,18 @@ public class StudentServiceImpl implements StudentService {
     /**
      * CAN BE IMPROVE TO ONLY UPDATE VARIABLES THAT ARE UPDATED FROM THE REQUEST
      * @param request
-     * @param id
      * @return
      */
     @Override
-    public StudentDto updateStudent(StudentDto request, Integer id) {
-       Student student = studentRepository.findById(id)
-               .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
+    public StudentDto updateStudent(UpdateStudentRequest request) {
+        ApplicationUser applicationUser = applicationUserRepository.findById(request.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User with user ID: " + request.getUserId() + " not found."));
+       if(!applicationUser.getEmail().equals(request.getEmail())) {
+           applicationUser.setEmail(request.getEmail());
+           applicationUserRepository.save(applicationUser);
+       }
+        Student student = studentRepository.findStudentByUserId(applicationUser)
+               .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + request.getUserId()));
        student.setStudentNumber(request.getStudentNumber());
        student.setEmail(request.getEmail());
        student.setFirstName(request.getFirstName());
@@ -117,9 +123,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Integer id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
-        studentRepository.deleteById(id);
+        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(("User with ID: " + id + " not found.")));
+        applicationUserRepository.deleteById(applicationUser.getId());
     }
 
     @Override

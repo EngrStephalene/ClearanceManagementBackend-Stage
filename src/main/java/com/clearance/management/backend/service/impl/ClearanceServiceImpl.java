@@ -1,11 +1,14 @@
 package com.clearance.management.backend.service.impl;
 
 import com.clearance.management.backend.dto.ClearanceDto;
+import com.clearance.management.backend.dto.ClearanceDtoForStudent;
 import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
+import com.clearance.management.backend.entity.ApplicationUser;
 import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.entity.Faculty;
 import com.clearance.management.backend.entity.Student;
 import com.clearance.management.backend.exception.ResourceNotFoundException;
+import com.clearance.management.backend.repository.ApplicationUserRepository;
 import com.clearance.management.backend.repository.ClearanceRepository;
 import com.clearance.management.backend.repository.FacultyRepository;
 import com.clearance.management.backend.repository.StudentRepository;
@@ -15,10 +18,12 @@ import com.clearance.management.backend.service.ClearanceService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +42,9 @@ public class ClearanceServiceImpl implements ClearanceService {
 
     @Autowired
     private FacultyRepository facultyRepository;
+
+    @Autowired
+    private ApplicationUserRepository applicationUserRepository;
 
     private static final String ROLE_TREASURER = "ROLE_TREASURER";
     private static final String ROLE_CHAIRMAN = "ROLE_CHAIRMAN";
@@ -145,6 +153,35 @@ public class ClearanceServiceImpl implements ClearanceService {
                 .stream()
                 .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
                 .collect(Collectors.toList());
+    }
+
+    private String getRoleByUserId(Integer id) {
+        ApplicationUser applicationUser = applicationUserRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User with user ID: " + id + " not found."));
+        Collection<? extends GrantedAuthority> authorities = applicationUser.getAuthorities();
+        String role = "";
+        String roleConcat = "";
+        for(GrantedAuthority auth: authorities) {
+            role = auth.getAuthority();
+            break;
+        }
+        roleConcat = switch (role) {
+            case "ROLE_FACULTY" -> "faculty";
+            case "ROLE_FACULTY_HEAD" -> "facultyHead";
+            case "ROLE_TREASURER" -> "treasurer";
+            case "ROLE_CHAIRMAN" -> "chairman";
+            case "ROLE_SG_ADVISER" -> "sgAdviser";
+            case "ROLE_CAMPUS_MINISTRY" -> "campusMinistry";
+            case "ROLE_GUIDANCE_OFFICE" -> "guidanceOffice";
+            case "ROLE_LIBRARIAN" -> "libraryIncharge";
+            case "ROLE_DISPENSARY" -> "dispensaryIncharge";
+            case "ROLE_PROPERTY_CUSTODIAN" -> "propertyCustodian";
+            case "ROLE_PREFECT_DISCIPLINE" -> "prefectOfDiscipline";
+            case "ROLE_REGISTRAR" -> "schoolRegistrar";
+            case "ROLE_FINANCE" -> "finance";
+            default -> roleConcat;
+        };
+        return roleConcat;
     }
 
     @Override
