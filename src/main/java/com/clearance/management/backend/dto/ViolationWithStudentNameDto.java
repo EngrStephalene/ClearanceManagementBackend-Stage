@@ -17,6 +17,8 @@ public class ViolationWithStudentNameDto {
 
     private String studentName;
 
+    private String facultyName;
+
     public ViolationWithStudentNameDto() {
     }
 
@@ -90,5 +92,13 @@ public class ViolationWithStudentNameDto {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
     }
 }

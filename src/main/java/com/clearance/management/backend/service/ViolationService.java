@@ -13,6 +13,8 @@ public interface ViolationService {
     public ViolationDto updateViolation(ViolationRequest request, Integer id);
     public void deleteToDo(Integer id);
     public ViolationDto completeViolation(Integer id);
-    public List<ViolationDto> getViolationByStudentNumber(Integer studentNumber);
-    public List<ViolationDto> getStudentViolationByStudentId(Integer studentId);
+    public List<ViolationDto> getViolationByStudentNumber(String studentNumber);
+
+    //STUDENT ID IS REFERRED TO AS STUDENT NUMBER IN STUDENT TABLE
+    public List<ViolationDto> getStudentViolationByStudentId(String studentId);
 }

@@ -1,6 +1,7 @@
 package com.clearance.management.backend.service.impl;
 
 import com.clearance.management.backend.dto.ClearanceDto;
+import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
 import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.entity.Faculty;
 import com.clearance.management.backend.entity.Student;
@@ -9,6 +10,7 @@ import com.clearance.management.backend.repository.ClearanceRepository;
 import com.clearance.management.backend.repository.FacultyRepository;
 import com.clearance.management.backend.repository.StudentRepository;
 import com.clearance.management.backend.request.ClearanceRequest;
+import com.clearance.management.backend.request.RejectClearanceRequest;
 import com.clearance.management.backend.service.ClearanceService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -68,8 +70,8 @@ public class ClearanceServiceImpl implements ClearanceService {
                 str.append(" ");
                 str.append(faculty.getLastName());
                 str.append(" ");
-                String approverName = str.toString();
-                clearanceDto.setApproverName(approverName);
+                String approveName = str.toString();
+                clearanceDto.setApproverName(approveName);
                 Clearance clearance = modelMapper.map(clearanceDto, Clearance.class);
                 Clearance savedClearance = clearanceRepository.save(clearance);
                 createdClearances.add(modelMapper.map(savedClearance, ClearanceDto.class));
@@ -80,12 +82,59 @@ public class ClearanceServiceImpl implements ClearanceService {
     }
 
     @Override
-    public List<ClearanceDto> getAllClearanceRequest() {
+    public List<ClearanceDtoWithStudentName> getAllClearanceRequest() {
         List<Clearance> clearanceList = clearanceRepository.findAll();
-        return clearanceList
+        List<ClearanceDto> clearanceDtoList = new ArrayList<ClearanceDto>();
+        List<ClearanceDtoWithStudentName> clearanceDtoWithStudentNameList = new ArrayList<ClearanceDtoWithStudentName>();
+        clearanceDtoList = clearanceList
                 .stream()
                 .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
                 .collect(Collectors.toList());
+        for(ClearanceDto clearanceDto: clearanceDtoList) {
+            ClearanceDtoWithStudentName clearanceDtoWithStudentName = buildClearanceWithStudentName(clearanceDto);
+            clearanceDtoWithStudentNameList.add(clearanceDtoWithStudentName);
+        }
+        return clearanceDtoWithStudentNameList;
+    }
+
+    private ClearanceDtoWithStudentName buildClearanceWithStudentName(ClearanceDto clearance) {
+        ClearanceDtoWithStudentName clearanceDtoWithStudentName = new ClearanceDtoWithStudentName();
+        if(clearance.getId() != null) {
+            clearanceDtoWithStudentName.setId(clearance.getId());
+        }
+        if(clearance.getStudentId() != null) {
+            clearanceDtoWithStudentName.setStudentId(clearance.getStudentId());
+        }
+        if(clearance.getFacultyId() != null){
+            clearanceDtoWithStudentName.setFacultyId(clearance.getFacultyId());
+        }
+        if(clearance.getApproverName() != null) {
+            clearanceDtoWithStudentName.setApproverName(clearance.getApproverName());
+        }
+        if(clearance.getLogDate() != null) {
+            clearanceDtoWithStudentName.setLogDate(clearance.getLogDate());
+        }
+        if(clearance.getApprovedDate() != null) {
+            clearanceDtoWithStudentName.setApprovedDate(clearance.getApprovedDate());
+        }
+        if(clearance.getReason() != null) {
+            clearanceDtoWithStudentName.setReason(clearance.getReason());
+        }
+        if(clearance.getStatus() != null) {
+            clearanceDtoWithStudentName.setStatus(clearance.getStatus());
+        }
+        if(clearance.getRemarks() != null) {
+            clearanceDtoWithStudentName.setRemarks(clearance.getRemarks());
+        }
+
+        Student student = studentRepository.findById(Integer.parseInt(clearance.getStudentId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + clearance.getStudentId() + " not found."));
+        StringBuilder sb = new StringBuilder();
+        sb.append(student.getFirstName());
+        sb.append(" ");
+        sb.append(student.getLastName());
+        clearanceDtoWithStudentName.setStudentName(sb.toString());
+        return clearanceDtoWithStudentName;
     }
 
     @Override
@@ -122,12 +171,13 @@ public class ClearanceServiceImpl implements ClearanceService {
     }
 
     @Override
-    public ClearanceDto markAsReject(Integer id, String remarks) {
-        Clearance clearance = clearanceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Clearance with id " + id + " not found"));
+    public ClearanceDto markAsReject(RejectClearanceRequest request) {
+        Clearance clearance = clearanceRepository.findById(request.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Clearance with id " + request + " not found"));
         ClearanceDto clearanceForUpdate = modelMapper.map(clearance, ClearanceDto.class);
         String status = "Rejected";
         clearanceForUpdate.setStatus(status);
+        clearanceForUpdate.setRemarks(request.getRemarks());
         Clearance clearanceForSave = modelMapper.map(clearanceForUpdate, Clearance.class);
         Clearance savedClearance = clearanceRepository.save(clearanceForSave);
         return modelMapper.map(savedClearance, ClearanceDto.class);

@@ -1,8 +1,10 @@
 package com.clearance.management.backend.controller;
 
 import com.clearance.management.backend.dto.ClearanceDto;
+import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
 import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.request.ClearanceRequest;
+import com.clearance.management.backend.request.RejectClearanceRequest;
 import com.clearance.management.backend.service.ClearanceService;
 import org.hibernate.internal.util.securitymanager.SystemSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,9 @@ public class ClearanceController {
             "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @GetMapping("/")
-    public ResponseEntity<List<ClearanceDto>> getAllClearance() {
+    public ResponseEntity<List<ClearanceDtoWithStudentName>> getAllClearance() {
         System.out.println("GET ALL Clearance API is called.");
-        List<ClearanceDto> clearanceDtoList = clearanceService.getAllClearanceRequest();
+        List<ClearanceDtoWithStudentName> clearanceDtoList = clearanceService.getAllClearanceRequest();
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
@@ -75,9 +77,9 @@ public class ClearanceController {
             "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @PatchMapping("/reject")
-    public ResponseEntity<ClearanceDto> markClearanceAsReject(@PathVariable("id") Integer id, @RequestBody String remarks) {
+    public ResponseEntity<ClearanceDto> markClearanceAsReject(@RequestBody RejectClearanceRequest request) {
         System.out.println("MARK CLEARANCE AS REJECT API is called.");
-        ClearanceDto updatedClearance = clearanceService.markAsReject(id, remarks);
+        ClearanceDto updatedClearance = clearanceService.markAsReject(request);
         return new ResponseEntity<>(updatedClearance, HttpStatus.OK);
     }
 

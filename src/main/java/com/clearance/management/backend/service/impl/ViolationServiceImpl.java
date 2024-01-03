@@ -103,11 +103,18 @@ public class ViolationServiceImpl implements ViolationService {
         violationWithStudentNameDto.setUpdatedDate(violationDto.getUpdatedDate());
         Student student = studentRepository.findStudentByStudentNumber(violationDto.getStudentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + violationDto.getStudentId() + " not found."));
+        Faculty faculty = facultyRepository.findFacultyByFacultyNumber(violationDto.getFacultyId().toString())
+                .orElseThrow(() -> new ResourceNotFoundException("Faculty with id: " + violationDto.getFacultyId() + " not found."));
         StringBuilder sb = new StringBuilder();
         sb.append(student.getFirstName());
         sb.append(" ");
         sb.append(student.getLastName());
         violationWithStudentNameDto.setStudentName(sb.toString());
+        StringBuilder sbFaculty = new StringBuilder();
+        sbFaculty.append(faculty.getFirstName());
+        sbFaculty.append(" ");
+        sbFaculty.append(faculty.getLastName());
+        violationWithStudentNameDto.setFacultyName(sbFaculty.toString());
         return violationWithStudentNameDto;
     }
 
@@ -142,7 +149,7 @@ public class ViolationServiceImpl implements ViolationService {
     }
 
     @Override
-    public List<ViolationDto> getViolationByStudentNumber(Integer studentNumber) {
+    public List<ViolationDto> getViolationByStudentNumber(String studentNumber) {
         Student student = studentRepository.findStudentByStudentNumber(studentNumber.toString())
                 .orElseThrow(() -> new ResourceNotFoundException("Student with student id: " + studentNumber + " not found."));
         List<Violation> violationList = violationRepository.findViolationByStudentId(studentNumber.toString())
@@ -154,8 +161,8 @@ public class ViolationServiceImpl implements ViolationService {
     }
 
     @Override
-    public List<ViolationDto> getStudentViolationByStudentId(Integer studentId) {
-        List<Violation> violationList = violationRepository.findViolationByStudentId(studentId.toString())
+    public List<ViolationDto> getStudentViolationByStudentId(String studentId) {
+        List<Violation> violationList = violationRepository.findViolationByStudentId(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("No violation record for student."));
         return violationList
                 .stream()

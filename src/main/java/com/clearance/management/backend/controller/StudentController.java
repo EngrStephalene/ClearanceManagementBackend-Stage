@@ -46,6 +46,28 @@ public class StudentController {
             " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
             "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @GetMapping("/get-studentNumber/{userId}")
+    public ResponseEntity<String> getStudentNumberByUserId(@PathVariable("userId") Integer userId) {
+        System.out.println("GET STUDENT NUMBER BY USER ID API IS CALLED.");
+        String studentNumber = studentService.getStudentNumberByUserId(userId);
+        return new ResponseEntity<>(studentNumber, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'FACULTY', 'FACULTY_HEAD'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @GetMapping("/get-studentName/{userId}")
+    public ResponseEntity<String> getStudentFullnameByUserId(@PathVariable("userId") Integer userId) {
+        System.out.println("GET STUDENT FULL NAME BY USER ID API IS CALLED.");
+        String studentName = studentService.getStudentNameByUserId(userId);
+        return new ResponseEntity<>(studentName, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'FACULTY', 'FACULTY_HEAD'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @GetMapping("/{id}")
     public ResponseEntity<StudentDto> getStudentById(@PathVariable("id") Integer id) {
         System.out.println("Get student by id API is called.");

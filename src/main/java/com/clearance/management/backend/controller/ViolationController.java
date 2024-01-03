@@ -21,10 +21,7 @@ public class ViolationController {
     @Autowired
     ViolationService violationService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     @PostMapping("/add/{studentNumber}")
     public ResponseEntity<ViolationDto> addViolation(@RequestBody ViolationRequest request,
                                                      @PathVariable(name = "studentNumber") String studentNumber) {
@@ -40,26 +37,16 @@ public class ViolationController {
         return new ResponseEntity<>(violationDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('STUDENT')")
-    @GetMapping("/student-violation/{studentNumber}")
-    public ResponseEntity<List<ViolationDto>> getViolationsByStudentNumber(@PathVariable("studentNumber") Integer studentNumber) {
-        System.out.println("GET VIOLATION BY STUDENT ID API IS CALLED.");
-        List<ViolationDto> violationDtoList = violationService.getViolationByStudentNumber(studentNumber);
-        return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
-    }
-
-    @PreAuthorize("hasRole('STUDENT')")
-    @GetMapping("/get/{studentId}")
-    public ResponseEntity<List<ViolationDto>> getViolationByStudentId(@PathVariable("studentId") Integer studentId) {
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY', 'STUDENT')")
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<List<ViolationDto>> getViolationByStudentId(@PathVariable("studentId") String studentId) {
         System.out.println("GET VIOLATION BY STUDENT ID API IS CALLED.");
         List<ViolationDto> violationDtoList = violationService.getStudentViolationByStudentId(studentId);
+        System.out.println(violationDtoList);
         return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY', 'STUDENT')")
     @GetMapping("/")
     public ResponseEntity<List<ViolationWithStudentNameDto>> getAllViolation() {
         System.out.println("GET ALL VIOLATION API IS CALLED.");
@@ -67,10 +54,7 @@ public class ViolationController {
         return new ResponseEntity<>(violationDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     @PutMapping("{id}")
     public ResponseEntity<ViolationDto> updateViolation(@RequestBody ViolationRequest request,@PathVariable("id") Integer id) {
         System.out.println("UPDATE VIOLATION API IS CALLED.");
@@ -78,10 +62,7 @@ public class ViolationController {
         return new ResponseEntity<>(updatedViolationDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     @PatchMapping("/complete/{id}")
     public ResponseEntity<ViolationDto> completeViolation(@PathVariable("id") Integer id) {
         System.out.println("PATCH VIOLATION API IS CALLED.");
@@ -89,10 +70,7 @@ public class ViolationController {
         return new ResponseEntity<>(completedViolation, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteViolation(@PathVariable("id") Integer id) {
         System.out.println("DELETE VIOLATION API IS CALLED.");

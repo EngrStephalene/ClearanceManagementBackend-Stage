@@ -130,4 +130,22 @@ public class StudentServiceImpl implements StudentService {
                 .orElseThrow(() -> new ResourceNotFoundException("Student with id " + userId + " not found."));
         return modelMapper.map(student, StudentDto.class);
     }
+
+    @Override
+    public String getStudentNumberByUserId(Integer userId) {
+        Student student = studentRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Student with id " + userId + " not found."));
+        return student.getStudentNumber();
+    }
+
+    @Override
+    public String getStudentNameByUserId(Integer userId) {
+        Student student = studentRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Student with id " + userId + " not found."));
+        StringBuffer sb = new StringBuffer();
+        sb.append(student.getFirstName());
+        sb.append(" ");
+        sb.append(student.getLastName());
+        return sb.toString();
+    }
 }
