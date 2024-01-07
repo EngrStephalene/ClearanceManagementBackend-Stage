@@ -21,7 +21,10 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PostMapping("/add")
     public ResponseEntity<DepartmentDto> addDepartment(@RequestBody DepartmentDto request) {
         System.out.println("ADD department API is called");
@@ -29,7 +32,10 @@ public class DepartmentController {
         return new ResponseEntity<>(savedDepartmentDto, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD', 'FACULTY')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("{id}")
     public ResponseEntity<DepartmentDto> getDepartment(@PathVariable("id") Integer id) {
         System.out.println("GET department API is called");
@@ -37,10 +43,11 @@ public class DepartmentController {
         return  new ResponseEntity<>(departmentDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'FACULTY', 'ROLE_FACULTY_HEAD'," +
-            " 'ROLE_TREASURER', 'ROLE_CHAIRMAN', 'ROLE_SG_ADVISER', 'ROLE_CAMPUS_MINISTRY', " +
-            "'ROLE_GUIDANCE_OFFICE', 'ROLE_LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'ROLE_PROPERTY_CUSTODIAN', 'ROLE_PREFECT_DISCIPLINE', 'ROLE_REGISTRAR', 'ROLE_FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/")
     public ResponseEntity<List<DepartmentDto>> getAllDepartment() {
         System.out.println("GET ALL department API is called");
@@ -48,7 +55,10 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PutMapping("/update")
     public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody UpdateDepartmentRequest request) {
         System.out.println("UPDATE department API is called");

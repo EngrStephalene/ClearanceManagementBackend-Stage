@@ -78,16 +78,16 @@ public class BackendApplication {
 			dispensaryRoles.add(dispensaryRole);
 
 			Set<Role> propertyCustodianRoles = new HashSet<>();
-			librarianRoles.add(propertyCustodianRole);
+			propertyCustodianRoles.add(propertyCustodianRole);
 
 			Set<Role> prefectOfDisciplineRoles = new HashSet<>();
-			librarianRoles.add(prefectOfDisciplineRole);
+			prefectOfDisciplineRoles.add(prefectOfDisciplineRole);
 
 			Set<Role> registrarRoles = new HashSet<>();
-			librarianRoles.add(registrarRole);
+			registrarRoles.add(registrarRole);
 
 			Set<Role> financeRoles = new HashSet<>();
-			librarianRoles.add(financeRole);
+			financeRoles.add(financeRole);
 
 			Faculty adminFaculty = new Faculty("1", "tanstephalene@gmail.com", "Mary Stephalene", "", "Tan", "Larena Street, Poblacion, Guihulngan City");
 			Faculty campusMinistry = new Faculty("2", "munezjanjan@gmail.com", "John", "Sangilla", "Munez", "Lalibertad");

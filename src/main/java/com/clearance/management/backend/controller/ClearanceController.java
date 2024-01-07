@@ -25,10 +25,10 @@ public class ClearanceController {
     @Autowired
     ClearanceService clearanceService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/")
     public ResponseEntity<List<ClearanceDtoWithStudentName>> getAllClearance() {
         System.out.println("GET ALL Clearance API is called.");
@@ -36,7 +36,11 @@ public class ClearanceController {
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT', 'FACULTY')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("{studentId}")
     public ResponseEntity<List<ClearanceWithFacultyDTO>> getClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
         System.out.println("GET CLEARANCE BY STUDENT ID API is called.");
@@ -44,7 +48,11 @@ public class ClearanceController {
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/student-info/{userId}")
     public ResponseEntity<StudentClearanceHeaderDTO> getStudentInfoForHeader(@PathVariable("userId") Integer userId) {
         System.out.println("GET STUDENT INFO FOR HEADER API is called.");
@@ -52,10 +60,10 @@ public class ClearanceController {
         return new ResponseEntity<>(studentClearanceHeaderDTO, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/faculty/{facultyId}")
     public ResponseEntity<List<ClearanceDtoWithStudentName>> getClearanceByFacultyId(@PathVariable("facultyId") Integer facultyId) {
         System.out.println("GET CLEARANCE BY STUDENT ID API is called.");
@@ -63,7 +71,10 @@ public class ClearanceController {
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT', 'FACULTY')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @DeleteMapping("{studentId}")
     public ResponseEntity<String> deleteClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
         System.out.println("Delete clearance by student id api is called");
@@ -71,10 +82,10 @@ public class ClearanceController {
         return new ResponseEntity<>("Successfully deleted clearances.", HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PatchMapping("{id}")
     public ResponseEntity<ClearanceDto> markClearanceAsApprove(@PathVariable("id") Integer id) {
         System.out.println("MARK CLEARANCE AS APPROVE API is called.");
@@ -82,10 +93,10 @@ public class ClearanceController {
         return new ResponseEntity<>(updatedClearance, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PatchMapping("/reject")
     public ResponseEntity<ClearanceDto> markClearanceAsReject(@RequestBody RejectClearanceRequest request) {
         System.out.println("MARK CLEARANCE AS REJECT API is called.");
@@ -93,7 +104,7 @@ public class ClearanceController {
         return new ResponseEntity<>(updatedClearance, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT', 'FACULTY')")
+    @PreAuthorize("hasAnyRole('STUDENT', STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV')")
     @PostMapping("/add")
     public ResponseEntity<List<ClearanceDto>> addClearance(@RequestBody ClearanceRequest request) {
         List<ClearanceDto> savedClearance = clearanceService.addClearance(request);

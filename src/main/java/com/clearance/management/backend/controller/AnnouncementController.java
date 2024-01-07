@@ -23,7 +23,10 @@ public class AnnouncementController {
     @Autowired
     private AnnouncementService announcementService;
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PostMapping("/add")
     public ResponseEntity<AnnouncementDto> addAnnouncement(@RequestBody AnnouncementRequest request) {
         System.out.println("ADD announcement api is called.");
@@ -31,6 +34,11 @@ public class AnnouncementController {
         return new ResponseEntity<>(announcementDto, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/")
     public ResponseEntity<List<AnnouncementFormattedDateDto>> getAllAnnouncement() {
         System.out.println("GET ALL announcement api is called.");
@@ -38,6 +46,11 @@ public class AnnouncementController {
         return new ResponseEntity<>(announcementDtoList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("{id}")
     public ResponseEntity<AnnouncementDto> getAnnouncementById(@PathVariable("id") Integer id) {
         System.out.println("GET announcement api is called.");
@@ -45,7 +58,10 @@ public class AnnouncementController {
         return new ResponseEntity<>(announcementDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PutMapping("/update")
     public ResponseEntity<AnnouncementDto> updateAnnouncementDto(@RequestBody UpdateAnnouncementRequest request) {
         System.out.println("UPDATE announcement api is called.");
@@ -53,7 +69,10 @@ public class AnnouncementController {
         return new ResponseEntity<>(announcementDto, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteAnnouncementDto(@PathVariable("id") Integer id) {
         System.out.println("DELETE announcement api is called.");

@@ -23,10 +23,10 @@ public class FacultyController {
     @Autowired
     private FacultyService facultyService;
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PostMapping("/add")
     public ResponseEntity<FacultyDto> addFaculty(@RequestBody FacultyDto request) {
         System.out.println("ADD faculty API is called");
@@ -42,10 +42,10 @@ public class FacultyController {
         return new ResponseEntity<>(savedFaculty, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY', 'FACULTY_HEAD'," +
-            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
-            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
-            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/")
     public ResponseEntity<List<FacultyDto>> getAllFaculty() {
         System.out.println("GET ALL faculty api is called.");
@@ -53,6 +53,10 @@ public class FacultyController {
         return new ResponseEntity<>(facultyList, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/get")
     public ResponseEntity<FacultyDto> getFacultyByFacultyNumber(@RequestParam(name = "facultyNumber") String facultyNumber) {
         System.out.println("GET FACULTY BY FACULTY NUMBER api is called.");
@@ -60,7 +64,10 @@ public class FacultyController {
         return new ResponseEntity<>(faculty, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/info/{userId}")
     public ResponseEntity<FacultyDto> getFacultyInfoByRole(@PathVariable("userId") String userId) {
         System.out.print("Get faculty information based on app user info api is called.");
@@ -68,6 +75,7 @@ public class FacultyController {
         return new ResponseEntity<>(facultyDto, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<FacultyDto> updateFaculty(@PathVariable("id") Integer id, @RequestBody UpdateFacultyRequest request) {
         System.out.println("UPDATE faculty api is called.");
@@ -75,7 +83,10 @@ public class FacultyController {
         return new ResponseEntity<>(updatedFaculty, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','FACULTY')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/getFaculty/{username}")
     public ResponseEntity<FacultyDto> getFacultyByUsername(@PathVariable(name = "username") String username) {
         System.out.println("GET Faculty by user id api is called.");

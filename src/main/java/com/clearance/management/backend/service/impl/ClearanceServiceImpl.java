@@ -20,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -174,18 +175,22 @@ public class ClearanceServiceImpl implements ClearanceService {
                     .orElseThrow(() -> new ResourceNotFoundException("User not found."));
             Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
                     .orElseThrow(() -> new ResourceNotFoundException("Faculty not found"));
-            clearanceWithFacultyDTO.setFacultyId(clearance.getFacultyId());
-            clearanceWithFacultyDTO.setOffice(faculty.getFacultyOffice());
-            clearanceWithFacultyDTO.setStudentId(clearance.getStudentId());
-            clearanceWithFacultyDTO.setRemarks(clearance.getRemarks());
-            clearanceWithFacultyDTO.setStatus(clearance.getStatus());
-            clearanceWithFacultyDTO.setApproverName(clearance.getApproverName());
-            clearanceWithFacultyDTO.setApprovedDate(clearance.getApprovedDate());
-            clearanceWithFacultyDTO.setLogDate(clearance.getLogDate());
-            clearanceWithFacultyDTO.setReason(clearance.getReason());
-            clearanceWithFacultyDTOList.add(clearanceWithFacultyDTO);
+            if(!faculty.getFacultyOffice().equals("Admin")) {
+                SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd , yyyy");
+                if(clearance.getApprovedDate() != null) {
+                    clearanceWithFacultyDTO.setApprovedDate(formatter.format(clearance.getApprovedDate()));
+                }
+                clearanceWithFacultyDTO.setFacultyId(clearance.getFacultyId());
+                clearanceWithFacultyDTO.setOffice(faculty.getFacultyOffice());
+                clearanceWithFacultyDTO.setStudentId(clearance.getStudentId());
+                clearanceWithFacultyDTO.setRemarks(clearance.getRemarks());
+                clearanceWithFacultyDTO.setStatus(clearance.getStatus());
+                clearanceWithFacultyDTO.setApproverName(clearance.getApproverName());
+                clearanceWithFacultyDTO.setLogDate(clearance.getLogDate());
+                clearanceWithFacultyDTO.setReason(clearance.getReason());
+                clearanceWithFacultyDTOList.add(clearanceWithFacultyDTO);
+            }
         }
-
         return clearanceWithFacultyDTOList;
     }
 

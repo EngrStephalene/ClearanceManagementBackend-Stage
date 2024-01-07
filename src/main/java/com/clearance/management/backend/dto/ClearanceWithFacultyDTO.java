@@ -10,12 +10,9 @@ public class ClearanceWithFacultyDTO {
     private Date logDate;
     private String reason;
     private String status;
-
     private String studentId;
-
     private String facultyId;
-
-    private Date approvedDate;
+    private String approvedDate;
 
     private Set<Faculty> approvers;
 
@@ -75,14 +72,6 @@ public class ClearanceWithFacultyDTO {
         this.facultyId = facultyId;
     }
 
-    public Date getApprovedDate() {
-        return approvedDate;
-    }
-
-    public void setApprovedDate(Date approvedDate) {
-        this.approvedDate = approvedDate;
-    }
-
     public Set<Faculty> getApprovers() {
         return approvers;
     }
@@ -113,5 +102,13 @@ public class ClearanceWithFacultyDTO {
 
     public void setOffice(String office) {
         this.office = office;
+    }
+
+    public String getApprovedDate() {
+        return approvedDate;
+    }
+
+    public void setApprovedDate(String approvedDate) {
+        this.approvedDate = approvedDate;
     }
 }
