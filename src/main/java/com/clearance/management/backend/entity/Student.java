@@ -39,6 +39,18 @@ public class Student {
     @JoinColumn(name = "user_id")
     private ApplicationUser applicationUser;
 
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "year_level")
+    private String yearLevel;
+
+    @Column(name = "birthday")
+    private String birthday;
+
+    @Column(name = "department_id")
+    private Integer departmentId;
+
     public Student() {
     }
 
@@ -104,5 +116,37 @@ public class Student {
 
     public void setApplicationUser(ApplicationUser applicationUser) {
         this.applicationUser = applicationUser;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getYearLevel() {
+        return yearLevel;
+    }
+
+    public void setYearLevel(String yearLevel) {
+        this.yearLevel = yearLevel;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }

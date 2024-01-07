@@ -1,8 +1,6 @@
 package com.clearance.management.backend.service.impl;
 
-import com.clearance.management.backend.dto.ClearanceDto;
-import com.clearance.management.backend.dto.ClearanceDtoForStudent;
-import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
+import com.clearance.management.backend.dto.*;
 import com.clearance.management.backend.entity.ApplicationUser;
 import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.entity.Faculty;
@@ -92,12 +90,11 @@ public class ClearanceServiceImpl implements ClearanceService {
     @Override
     public List<ClearanceDtoWithStudentName> getAllClearanceRequest() {
         List<Clearance> clearanceList = clearanceRepository.findAll();
-        List<ClearanceDto> clearanceDtoList = new ArrayList<ClearanceDto>();
         List<ClearanceDtoWithStudentName> clearanceDtoWithStudentNameList = new ArrayList<ClearanceDtoWithStudentName>();
-        clearanceDtoList = clearanceList
+        List<ClearanceDto> clearanceDtoList = clearanceList
                 .stream()
                 .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
-                .collect(Collectors.toList());
+                .toList();
         for(ClearanceDto clearanceDto: clearanceDtoList) {
             ClearanceDtoWithStudentName clearanceDtoWithStudentName = buildClearanceWithStudentName(clearanceDto);
             clearanceDtoWithStudentNameList.add(clearanceDtoWithStudentName);
@@ -107,6 +104,10 @@ public class ClearanceServiceImpl implements ClearanceService {
 
     private ClearanceDtoWithStudentName buildClearanceWithStudentName(ClearanceDto clearance) {
         ClearanceDtoWithStudentName clearanceDtoWithStudentName = new ClearanceDtoWithStudentName();
+        ApplicationUser applicationUser = applicationUserRepository.findById(Integer.parseInt(clearance.getFacultyId()))
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+        Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
+                .orElseThrow(() -> new ResourceNotFoundException("Faculty not found."));
         if(clearance.getId() != null) {
             clearanceDtoWithStudentName.setId(clearance.getId());
         }
@@ -134,6 +135,7 @@ public class ClearanceServiceImpl implements ClearanceService {
         if(clearance.getRemarks() != null) {
             clearanceDtoWithStudentName.setRemarks(clearance.getRemarks());
         }
+        clearanceDtoWithStudentName.setOffice(faculty.getFacultyOffice());
 
         Student student = studentRepository.findById(Integer.parseInt(clearance.getStudentId()))
                 .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + clearance.getStudentId() + " not found."));
@@ -146,13 +148,45 @@ public class ClearanceServiceImpl implements ClearanceService {
     }
 
     @Override
-    public List<ClearanceDto> getClearanceByStudentId(Integer studentId) {
-        List<Clearance> clearanceList = clearanceRepository.findClearanceByStudentId(studentId.toString())
-                .orElseThrow(() -> new ResourceNotFoundException("Clearance for student " + studentId + " not found"));
-        return clearanceList
+    public List<ClearanceDtoWithStudentName> getClearanceByFacultyId(Integer facultyId) {
+        List<Clearance> clearanceList = clearanceRepository.findClearanceByFacultyId(facultyId.toString())
+                .orElseThrow(() -> new ResourceNotFoundException("Clearance for faculty " + facultyId + " not found."));
+        List<ClearanceDtoWithStudentName> clearanceDtoWithStudentNameList = new ArrayList<ClearanceDtoWithStudentName>();
+        List<ClearanceDto> clearanceDtoList = clearanceList
                 .stream()
                 .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
-                .collect(Collectors.toList());
+                .toList();
+        for(ClearanceDto clearanceDto: clearanceDtoList) {
+            ClearanceDtoWithStudentName clearanceDtoWithStudentName = buildClearanceWithStudentName(clearanceDto);
+            clearanceDtoWithStudentNameList.add(clearanceDtoWithStudentName);
+        }
+        return clearanceDtoWithStudentNameList;
+    }
+
+    @Override
+    public List<ClearanceWithFacultyDTO> getClearanceByStudentId(Integer studentId) {
+        List<Clearance> clearanceList = clearanceRepository.findClearanceByStudentId(studentId.toString())
+                .orElseThrow(() -> new ResourceNotFoundException("Clearance for student " + studentId + " not found"));
+        List<ClearanceWithFacultyDTO> clearanceWithFacultyDTOList = new ArrayList<>();
+        for(Clearance clearance: clearanceList) {
+            ClearanceWithFacultyDTO clearanceWithFacultyDTO = new ClearanceWithFacultyDTO();
+            ApplicationUser applicationUser = applicationUserRepository.findById(Integer.parseInt(clearance.getFacultyId()))
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found."));
+            Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
+                    .orElseThrow(() -> new ResourceNotFoundException("Faculty not found"));
+            clearanceWithFacultyDTO.setFacultyId(clearance.getFacultyId());
+            clearanceWithFacultyDTO.setOffice(faculty.getFacultyOffice());
+            clearanceWithFacultyDTO.setStudentId(clearance.getStudentId());
+            clearanceWithFacultyDTO.setRemarks(clearance.getRemarks());
+            clearanceWithFacultyDTO.setStatus(clearance.getStatus());
+            clearanceWithFacultyDTO.setApproverName(clearance.getApproverName());
+            clearanceWithFacultyDTO.setApprovedDate(clearance.getApprovedDate());
+            clearanceWithFacultyDTO.setLogDate(clearance.getLogDate());
+            clearanceWithFacultyDTO.setReason(clearance.getReason());
+            clearanceWithFacultyDTOList.add(clearanceWithFacultyDTO);
+        }
+
+        return clearanceWithFacultyDTOList;
     }
 
     private String getRoleByUserId(Integer id) {
@@ -221,12 +255,27 @@ public class ClearanceServiceImpl implements ClearanceService {
     }
 
     @Override
-    public List<ClearanceDto> getClearanceByFacultyId(Integer facultyId) {
-        List<Clearance> clearanceList = clearanceRepository.findClearanceByFacultyId(facultyId.toString())
-                .orElseThrow(() -> new ResourceNotFoundException("Clearance for faculty " + facultyId + " not found."));
-        return clearanceList
-                .stream()
-                .map((clearance) -> modelMapper.map(clearance, ClearanceDto.class))
-                .collect(Collectors.toList());
+    public StudentClearanceHeaderDTO getStudentInformationForHeader(Integer userId) {
+        StudentClearanceHeaderDTO studentClearanceHeaderDTO = new StudentClearanceHeaderDTO();
+        ApplicationUser applicationUser = applicationUserRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + " not found."));
+        Student student = studentRepository.findStudentByUserId(applicationUser)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found."));
+        StringBuilder sb = new StringBuilder();
+        sb.append(student.getFirstName());
+        sb.append(" ");
+        sb.append(student.getLastName());
+        String studentName = sb.toString();
+        studentClearanceHeaderDTO.setStudentName(studentName);
+        studentClearanceHeaderDTO.setYearLevel(student.getYearLevel());
+        List<Clearance> clearanceList = clearanceRepository.findClearanceByStudentId(userId.toString())
+                .orElseThrow(() -> new ResourceNotFoundException("Clearance with student ID: " + userId.toString() + " not found."));
+        for(Clearance clearance : clearanceList) {
+            if(clearance.getReason() != null && !clearance.getReason().isEmpty()) {
+                studentClearanceHeaderDTO.setPurpose(clearance.getReason());
+                break;
+            }
+        }
+        return studentClearanceHeaderDTO;
     }
 }

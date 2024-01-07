@@ -18,11 +18,11 @@ public class Announcement {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "sub_description")
-    private String subDescription;
-
     @Column(name = "reported_date", nullable = false)
     private Date reportedDate;
+
+    @Column(name = "reporter", nullable = false)
+    private String reporter;
 
     public Announcement() {
     }
@@ -59,11 +59,11 @@ public class Announcement {
         this.reportedDate = reportedDate;
     }
 
-    public String getSubDescription() {
-        return subDescription;
+    public String getReporter() {
+        return reporter;
     }
 
-    public void setSubDescription(String subDescription) {
-        this.subDescription = subDescription;
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
     }
 }

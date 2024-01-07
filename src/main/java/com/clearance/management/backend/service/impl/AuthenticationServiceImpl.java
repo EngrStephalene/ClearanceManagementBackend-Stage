@@ -34,8 +34,9 @@ import java.util.StringTokenizer;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     protected String PASSWORD;
-    private static final String ROLE_TREASURER = "ROLE_TREASURER";
-    private static final String ROLE_CHAIRMAN = "ROLE_CHAIRMAN";
+    private static final String ROLE_DEPARTMENT_CHAIRMAN = "ROLE_DEPARTMENT_CHAIRMAN";
+    private static final String ROLE_SCHOOL_DIRECTOR = "ROLE_SCHOOL_DIRECTOR";
+    private static final String ROLE_COLLEGE_DEAN = "ROLE_COLLEGE_DEAN";
     private static final String ROLE_SG_ADVISER = "ROLE_SG_ADVISER";
     private static final String ROLE_CAMPUS_MINISTRY = "ROLE_CAMPUS_MINISTRY";
     private static final String ROLE_GUIDANCE_OFFICE = "ROLE_GUIDANCE_OFFICE";
@@ -267,27 +268,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     private String setFacultyRole(String role) {
         String facultyHeadRole = null;
-        if (StringUtils.hasText(role) && "treasurer".equalsIgnoreCase(role)) {
-            facultyHeadRole = ROLE_TREASURER;
-        } else if (StringUtils.hasText(role) && "chairman".equalsIgnoreCase(role)) {
-            facultyHeadRole = ROLE_CHAIRMAN;
-        } else if (StringUtils.hasText(role) && "sgAdviser".equalsIgnoreCase(role)) {
+        if (StringUtils.hasText(role) && "Department Chairman".equalsIgnoreCase(role)) {
+            facultyHeadRole = ROLE_DEPARTMENT_CHAIRMAN;
+        } else if(StringUtils.hasText(role) && "College Dean".equalsIgnoreCase(role)) {
+            facultyHeadRole = ROLE_COLLEGE_DEAN;
+        } else if(StringUtils.hasText(role) && "School Director".equalsIgnoreCase(role)) {
+            facultyHeadRole = ROLE_SCHOOL_DIRECTOR;
+        }else if (StringUtils.hasText(role) && "SG Adviser".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_SG_ADVISER;
-        } else if (StringUtils.hasText(role) && "campusMinistry".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Campus Ministry".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_CAMPUS_MINISTRY;
-        } else if (StringUtils.hasText(role) && "guidanceOffice".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Guidance Office".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_GUIDANCE_OFFICE;
-        } else if (StringUtils.hasText(role) && "libraryIncharge".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Library In-Charge".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_LIBRARIAN;
-        } else if (StringUtils.hasText(role) && "libraryIncharge".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Dispensary In-Charge".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_DISPENSARY;
-        } else if (StringUtils.hasText(role) && "propertyCustodian".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Property Custodian".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_PROPERTY_CUSTODIAN;
-        } else if (StringUtils.hasText(role) && "prefectOfDiscipline".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Prefect Of Discipline".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_PREFECT_DISCIPLINE;
-        } else if (StringUtils.hasText(role) && "schoolRegistrar".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Registrar".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_REGISTRAR;
-        } else if (StringUtils.hasText(role) && "finance".equalsIgnoreCase(role)) {
+        } else if (StringUtils.hasText(role) && "Finance".equalsIgnoreCase(role)) {
             facultyHeadRole = ROLE_FINANCE;
         } else {
             facultyHeadRole = "ROLE_FACULTY";

@@ -7,8 +7,9 @@ public class AnnouncementDto {
     private Integer id;
     private String title;
     private String description;
-    private String subDescription;
     private Date reportedDate;
+
+    private String reporter;
 
     public AnnouncementDto() {
     }
@@ -37,19 +38,19 @@ public class AnnouncementDto {
         this.description = description;
     }
 
-    public String getSubDescription() {
-        return subDescription;
-    }
-
-    public void setSubDescription(String subDescription) {
-        this.subDescription = subDescription;
-    }
-
     public Date getReportedDate() {
         return reportedDate;
     }
 
     public void setReportedDate(Date reportedDate) {
         this.reportedDate = reportedDate;
+    }
+
+    public String getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
     }
 }

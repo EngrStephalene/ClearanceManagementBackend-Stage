@@ -6,12 +6,12 @@ public class ViolationWithStudentNameDto {
     private Integer id;
     private String description;
     private String actionItem;
-    private Date logDate;
+    private String logDate;
     private boolean completed;
 
     private String studentId;
 
-    private Date updatedDate;
+    private String updatedDate;
 
     private Integer facultyId;
 
@@ -38,11 +38,11 @@ public class ViolationWithStudentNameDto {
         this.actionItem = actionItem;
     }
 
-    public Date getLogDate() {
+    public String getLogDate() {
         return logDate;
     }
 
-    public void setLogDate(Date logDate) {
+    public void setLogDate(String logDate) {
         this.logDate = logDate;
     }
 
@@ -62,11 +62,11 @@ public class ViolationWithStudentNameDto {
         this.completed = completed;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(Date updatedDate) {
+    public void setUpdatedDate(String updatedDate) {
         this.updatedDate = updatedDate;
     }
 

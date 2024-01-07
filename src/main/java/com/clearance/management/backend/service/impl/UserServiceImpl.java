@@ -74,10 +74,6 @@ public class UserServiceImpl implements UserService {
         UserProfileDto userProfileDto = new UserProfileDto();
         ApplicationUser applicationUser = applicationUserRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("User with user ID: " + request.getUserId() + " not found."));
-        if(!applicationUser.getUsername().equals(request.getUsername())) {
-            applicationUser.setUsername(request.getUsername());
-            applicationUserRepository.save(applicationUser);
-        }
         userProfileDto.setUserId(applicationUser.getId());
         userProfileDto.setRole(request.getRole());
         if(roleFromRequest != null && roleFromRequest.equals("ROLE_STUDENT")) {

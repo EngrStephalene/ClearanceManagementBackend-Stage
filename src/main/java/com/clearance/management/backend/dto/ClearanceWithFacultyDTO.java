@@ -5,8 +5,7 @@ import com.clearance.management.backend.entity.Faculty;
 import java.util.Date;
 import java.util.Set;
 
-public class ClearanceDto {
-
+public class ClearanceWithFacultyDTO {
     private Integer id;
     private Date logDate;
     private String reason;
@@ -23,9 +22,9 @@ public class ClearanceDto {
     private String remarks;
 
     private String approverName;
+    private String office;
 
-
-    public ClearanceDto() {
+    public ClearanceWithFacultyDTO() {
     }
 
     public Integer getId() {
@@ -60,23 +59,6 @@ public class ClearanceDto {
         this.status = status;
     }
 
-    public Set<Faculty> getApprovers() {
-        return approvers;
-    }
-
-    public void setApprovers(Set<Faculty> approvers) {
-        this.approvers = approvers;
-    }
-
-
-    public Date getApprovedDate() {
-        return approvedDate;
-    }
-
-    public void setApprovedDate(Date approvedDate) {
-        this.approvedDate = approvedDate;
-    }
-
     public String getStudentId() {
         return studentId;
     }
@@ -93,6 +75,22 @@ public class ClearanceDto {
         this.facultyId = facultyId;
     }
 
+    public Date getApprovedDate() {
+        return approvedDate;
+    }
+
+    public void setApprovedDate(Date approvedDate) {
+        this.approvedDate = approvedDate;
+    }
+
+    public Set<Faculty> getApprovers() {
+        return approvers;
+    }
+
+    public void setApprovers(Set<Faculty> approvers) {
+        this.approvers = approvers;
+    }
+
     public String getRemarks() {
         return remarks;
     }
@@ -107,5 +105,13 @@ public class ClearanceDto {
 
     public void setApproverName(String approverName) {
         this.approverName = approverName;
+    }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
     }
 }

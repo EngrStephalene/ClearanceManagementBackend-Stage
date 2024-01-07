@@ -14,9 +14,12 @@ public class StudentDto {
     private String middleName;
     private String lastName;
     private String address;
-
     private Integer userId;
     private Set<Violation> violations;
+    private String gender;
+    private String yearLevel;
+    private String birthday;
+    private Integer departmentId;
 
     public StudentDto() {
     }
@@ -91,5 +94,37 @@ public class StudentDto {
 
     public void setViolations(Set<Violation> violations) {
         this.violations = violations;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getYearLevel() {
+        return yearLevel;
+    }
+
+    public void setYearLevel(String yearLevel) {
+        this.yearLevel = yearLevel;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }

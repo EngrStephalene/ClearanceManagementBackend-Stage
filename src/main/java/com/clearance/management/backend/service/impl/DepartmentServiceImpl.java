@@ -2,9 +2,9 @@ package com.clearance.management.backend.service.impl;
 
 import com.clearance.management.backend.dto.DepartmentDto;
 import com.clearance.management.backend.entity.Department;
-import com.clearance.management.backend.entity.Subject;
 import com.clearance.management.backend.exception.ResourceNotFoundException;
 import com.clearance.management.backend.repository.DepartmentRepository;
+import com.clearance.management.backend.request.UpdateDepartmentRequest;
 import com.clearance.management.backend.service.DepartmentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +46,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDto updateDepartment(DepartmentDto request, Integer id) {
-        Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + id));
+    public DepartmentDto updateDepartment(UpdateDepartmentRequest request) {
+        Department department = departmentRepository.findById(request.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found with id: " + request.getId()));
         department.setDepartmentName(request.getDepartmentName());
         Department updatedDepartment = departmentRepository.save(department);
         return modelMapper.map(updatedDepartment, DepartmentDto.class);

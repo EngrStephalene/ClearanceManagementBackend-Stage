@@ -1,6 +1,7 @@
 package com.clearance.management.backend.controller;
 
 import com.clearance.management.backend.dto.DepartmentDto;
+import com.clearance.management.backend.request.UpdateDepartmentRequest;
 import com.clearance.management.backend.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,10 @@ public class DepartmentController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
-    @PutMapping("{id}")
-    public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody DepartmentDto request, @PathVariable("id") Integer id) {
+    @PutMapping("/update")
+    public ResponseEntity<DepartmentDto> updateDepartment(@RequestBody UpdateDepartmentRequest request) {
         System.out.println("UPDATE department API is called");
-        DepartmentDto updatedDepartmentDto = departmentService.updateDepartment(request, id);
+        DepartmentDto updatedDepartmentDto = departmentService.updateDepartment(request);
         return new ResponseEntity<>(updatedDepartmentDto,HttpStatus.OK);
     }
 

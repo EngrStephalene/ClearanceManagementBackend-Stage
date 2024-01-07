@@ -2,6 +2,8 @@ package com.clearance.management.backend.controller;
 
 import com.clearance.management.backend.dto.AnnouncementDto;
 import com.clearance.management.backend.dto.AnnouncementRequest;
+import com.clearance.management.backend.dto.AnnouncementFormattedDateDto;
+import com.clearance.management.backend.request.UpdateAnnouncementRequest;
 import com.clearance.management.backend.service.AnnouncementService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +32,9 @@ public class AnnouncementController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AnnouncementDto>> getAllAnnouncement() {
+    public ResponseEntity<List<AnnouncementFormattedDateDto>> getAllAnnouncement() {
         System.out.println("GET ALL announcement api is called.");
-        List<AnnouncementDto> announcementDtoList = announcementService.getAllAnnouncement();
+        List<AnnouncementFormattedDateDto> announcementDtoList = announcementService.getAllAnnouncement();
         return new ResponseEntity<>(announcementDtoList, HttpStatus.OK);
     }
 
@@ -44,10 +46,10 @@ public class AnnouncementController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','FACULTY_HEAD')")
-    @PutMapping("{id}")
-    public ResponseEntity<AnnouncementDto> updateAnnouncementDto(@RequestBody AnnouncementDto request, @PathVariable("id") Integer id) {
+    @PutMapping("/update")
+    public ResponseEntity<AnnouncementDto> updateAnnouncementDto(@RequestBody UpdateAnnouncementRequest request) {
         System.out.println("UPDATE announcement api is called.");
-        AnnouncementDto announcementDto = announcementService.updateAnnouncement(request, id);
+        AnnouncementDto announcementDto = announcementService.updateAnnouncement(request);
         return new ResponseEntity<>(announcementDto, HttpStatus.OK);
     }
 

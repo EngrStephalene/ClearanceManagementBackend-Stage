@@ -76,6 +76,7 @@ public class FacultyServiceImpl implements FacultyService {
         facultyDto.setLastName(request.getLastName());
         facultyDto.setEmail(request.getEmail());
         facultyDto.setAddress(request.getAddress());
+        facultyDto.setFacultyOffice(request.getRole());
 
         AppUserDto appUserDto = authenticationService.registerFacultyHead(facultyDto.getFirstName(), facultyDto.getLastName(), facultyDto.getEmail(), request.getRole());
         ApplicationUser facultyHeadDetl = modelMapper.map(appUserDto, ApplicationUser.class);

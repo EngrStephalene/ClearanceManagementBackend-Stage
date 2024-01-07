@@ -24,6 +24,8 @@ public class ClearanceDtoWithStudentName {
 
     private String approverName;
 
+    private String office;
+
     String studentName;
 
     public ClearanceDtoWithStudentName() {
@@ -115,5 +117,13 @@ public class ClearanceDtoWithStudentName {
 
     public void setStudentName(String studentName) {
         this.studentName = studentName;
+    }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
     }
 }

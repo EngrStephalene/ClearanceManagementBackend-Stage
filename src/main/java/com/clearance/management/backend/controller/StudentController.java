@@ -1,5 +1,6 @@
 package com.clearance.management.backend.controller;
 
+import com.clearance.management.backend.dto.StudentClearanceHeaderDTO;
 import com.clearance.management.backend.dto.StudentDto;
 import com.clearance.management.backend.entity.Student;
 import com.clearance.management.backend.request.UpdateStudentRequest;

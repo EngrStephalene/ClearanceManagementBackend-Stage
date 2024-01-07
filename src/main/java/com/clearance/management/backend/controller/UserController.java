@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
-@CrossOrigin("*")
+@CrossOrigin("https://clearance-management-frontend-stage.vercel.app")
 public class UserController {
 
     @Autowired

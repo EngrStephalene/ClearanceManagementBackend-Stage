@@ -3,6 +3,7 @@ package com.clearance.management.backend.service.impl;
 import com.clearance.management.backend.dto.AppUserDto;
 import com.clearance.management.backend.dto.StudentDto;
 import com.clearance.management.backend.entity.ApplicationUser;
+import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.entity.Student;
 import com.clearance.management.backend.entity.Violation;
 import com.clearance.management.backend.exception.ResourceNotFoundException;

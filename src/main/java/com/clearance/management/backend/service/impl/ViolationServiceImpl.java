@@ -15,7 +15,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,12 +81,11 @@ public class ViolationServiceImpl implements ViolationService {
     @Override
     public List<ViolationWithStudentNameDto> getAllViolation() {
         List<Violation> violationList = violationRepository.findAll();
-        List<ViolationDto> violationDtoList = new ArrayList<ViolationDto>();
         List<ViolationWithStudentNameDto> violationWithStudentNameDtoList = new ArrayList<ViolationWithStudentNameDto>();
-        violationDtoList = violationList
+        List<ViolationDto> violationDtoList = violationList
                 .stream()
                 .map((violation) -> modelMapper.map(violation, ViolationDto.class))
-                .collect(Collectors.toList());
+                .toList();
         for(ViolationDto violationDto: violationDtoList) {
             ViolationWithStudentNameDto violationWithStudentNameDto = getViolationWithStudentNameDto(violationDto);
             violationWithStudentNameDtoList.add(violationWithStudentNameDto);
@@ -93,14 +95,17 @@ public class ViolationServiceImpl implements ViolationService {
 
     private ViolationWithStudentNameDto getViolationWithStudentNameDto(ViolationDto violationDto) {
         ViolationWithStudentNameDto violationWithStudentNameDto = new ViolationWithStudentNameDto();
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        String logDateStr = formatter.format(violationDto.getLogDate());
+        String updatedDateStr = formatter.format(violationDto.getUpdatedDate());
         violationWithStudentNameDto.setId(violationDto.getId());
         violationWithStudentNameDto.setStudentId(violationDto.getStudentId());
         violationWithStudentNameDto.setDescription(violationDto.getDescription());
         violationWithStudentNameDto.setActionItem(violationDto.getActionItem());
-        violationWithStudentNameDto.setLogDate(violationDto.getLogDate());
+        violationWithStudentNameDto.setLogDate(logDateStr);
         violationWithStudentNameDto.setCompleted(violationDto.isCompleted());
         violationWithStudentNameDto.setFacultyId(violationDto.getFacultyId());
-        violationWithStudentNameDto.setUpdatedDate(violationDto.getUpdatedDate());
+        violationWithStudentNameDto.setUpdatedDate(updatedDateStr);
         Student student = studentRepository.findStudentByStudentNumber(violationDto.getStudentId())
                 .orElseThrow(() -> new ResourceNotFoundException("Student with id: " + violationDto.getStudentId() + " not found."));
         Faculty faculty = facultyRepository.findFacultyByFacultyNumber(violationDto.getFacultyId().toString())

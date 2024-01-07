@@ -8,7 +8,9 @@ public class AnnouncementRequest {
 
     private String description;
 
-    private String subDescription;
+    private Integer reporterId;
+
+    private Integer reporterRole;
 
     public AnnouncementRequest() {
     }
@@ -37,11 +39,19 @@ public class AnnouncementRequest {
         this.description = description;
     }
 
-    public String getSubDescription() {
-        return subDescription;
+    public Integer getReporterId() {
+        return reporterId;
     }
 
-    public void setSubDescription(String subDescription) {
-        this.subDescription = subDescription;
+    public void setReporterId(Integer reporterId) {
+        this.reporterId = reporterId;
+    }
+
+    public Integer getReporterRole() {
+        return reporterRole;
+    }
+
+    public void setReporterRole(Integer reporterRole) {
+        this.reporterRole = reporterRole;
     }
 }

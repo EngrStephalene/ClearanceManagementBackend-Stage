@@ -2,6 +2,8 @@ package com.clearance.management.backend.service;
 
 import com.clearance.management.backend.dto.ClearanceDto;
 import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
+import com.clearance.management.backend.dto.ClearanceWithFacultyDTO;
+import com.clearance.management.backend.dto.StudentClearanceHeaderDTO;
 import com.clearance.management.backend.request.ClearanceRequest;
 import com.clearance.management.backend.request.RejectClearanceRequest;
 
@@ -12,7 +14,7 @@ public interface ClearanceService {
 
     public List<ClearanceDtoWithStudentName> getAllClearanceRequest();
 
-    public List<ClearanceDto> getClearanceByStudentId(Integer studentId);
+    public List<ClearanceWithFacultyDTO> getClearanceByStudentId(Integer studentId);
 
     public void deleteClearanceByStudentId(Integer studentId);
 
@@ -20,5 +22,7 @@ public interface ClearanceService {
 
     public ClearanceDto markAsReject(RejectClearanceRequest request);
 
-    public List<ClearanceDto> getClearanceByFacultyId(Integer facultyId);
+    public List<ClearanceDtoWithStudentName> getClearanceByFacultyId(Integer facultyId);
+
+    public StudentClearanceHeaderDTO getStudentInformationForHeader(Integer userId);
 }

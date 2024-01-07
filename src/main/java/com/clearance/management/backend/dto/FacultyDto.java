@@ -17,6 +17,8 @@ public class FacultyDto {
 
     private String email;
 
+    private String facultyOffice;
+
     public FacultyDto() {
     }
 
@@ -74,5 +76,21 @@ public class FacultyDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Integer facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getFacultyOffice() {
+        return facultyOffice;
+    }
+
+    public void setFacultyOffice(String facultyOffice) {
+        this.facultyOffice = facultyOffice;
     }
 }

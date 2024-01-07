@@ -31,6 +31,15 @@ public class Faculty {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "birthday")
+    private String birthday;
+
+    @Column(name = "office")
+    private String facultyOffice;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
@@ -110,5 +119,37 @@ public class Faculty {
 
     public void setApplicationUser(ApplicationUser applicationUser) {
         this.applicationUser = applicationUser;
+    }
+
+    public Integer getFacultyId() {
+        return facultyId;
+    }
+
+    public void setFacultyId(Integer facultyId) {
+        this.facultyId = facultyId;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getFacultyOffice() {
+        return facultyOffice;
+    }
+
+    public void setFacultyOffice(String facultyOffice) {
+        this.facultyOffice = facultyOffice;
     }
 }

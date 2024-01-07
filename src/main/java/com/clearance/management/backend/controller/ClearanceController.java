@@ -2,6 +2,8 @@ package com.clearance.management.backend.controller;
 
 import com.clearance.management.backend.dto.ClearanceDto;
 import com.clearance.management.backend.dto.ClearanceDtoWithStudentName;
+import com.clearance.management.backend.dto.ClearanceWithFacultyDTO;
+import com.clearance.management.backend.dto.StudentClearanceHeaderDTO;
 import com.clearance.management.backend.entity.Clearance;
 import com.clearance.management.backend.request.ClearanceRequest;
 import com.clearance.management.backend.request.RejectClearanceRequest;
@@ -36,10 +38,18 @@ public class ClearanceController {
 
     @PreAuthorize("hasAnyRole('STUDENT', 'FACULTY')")
     @GetMapping("{studentId}")
-    public ResponseEntity<List<ClearanceDto>> getClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
+    public ResponseEntity<List<ClearanceWithFacultyDTO>> getClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
         System.out.println("GET CLEARANCE BY STUDENT ID API is called.");
-        List<ClearanceDto> clearanceDtoList = clearanceService.getClearanceByStudentId(studentId);
+        List<ClearanceWithFacultyDTO> clearanceDtoList = clearanceService.getClearanceByStudentId(studentId);
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('STUDENT', 'ADMIN')")
+    @GetMapping("/student-info/{userId}")
+    public ResponseEntity<StudentClearanceHeaderDTO> getStudentInfoForHeader(@PathVariable("userId") Integer userId) {
+        System.out.println("GET STUDENT INFO FOR HEADER API is called.");
+        StudentClearanceHeaderDTO studentClearanceHeaderDTO = clearanceService.getStudentInformationForHeader(userId);
+        return new ResponseEntity<>(studentClearanceHeaderDTO, HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY_HEAD', 'FACULTY'," +
@@ -47,9 +57,9 @@ public class ClearanceController {
             "'GUIDANCE_OFFICE', 'LIBRARIAN', 'ROLE_DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
     @GetMapping("/faculty/{facultyId}")
-    public ResponseEntity<List<ClearanceDto>> getClearanceByFacultyId(@PathVariable("facultyId") Integer facultyId) {
+    public ResponseEntity<List<ClearanceDtoWithStudentName>> getClearanceByFacultyId(@PathVariable("facultyId") Integer facultyId) {
         System.out.println("GET CLEARANCE BY STUDENT ID API is called.");
-        List<ClearanceDto> clearanceDtoList = clearanceService.getClearanceByFacultyId(facultyId);
+        List<ClearanceDtoWithStudentName> clearanceDtoList = clearanceService.getClearanceByFacultyId(facultyId);
         return new ResponseEntity<>(clearanceDtoList, HttpStatus.OK);
     }
 
