@@ -28,6 +28,7 @@ public class ClearanceController {
     @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
             " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
             "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/")
     public ResponseEntity<List<ClearanceDtoWithStudentName>> getAllClearance() {
@@ -51,7 +52,7 @@ public class ClearanceController {
     @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
             " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
-            " 'STUDENT'," +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
             "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @GetMapping("/student-info/{userId}")
     public ResponseEntity<StudentClearanceHeaderDTO> getStudentInfoForHeader(@PathVariable("userId") Integer userId) {
