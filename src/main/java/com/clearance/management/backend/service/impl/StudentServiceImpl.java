@@ -88,7 +88,7 @@ public class StudentServiceImpl implements StudentService {
                 switch (studentDto.getYearLevel()) {
                     case "First" -> studentDto.setYearLevel("I");
                     case "Second" -> studentDto.setYearLevel("II");
-                    case "Thirs" -> studentDto.setYearLevel("III");
+                    case "Third" -> studentDto.setYearLevel("III");
                     case "Fourth" -> studentDto.setYearLevel("IV");
                 }
             }
