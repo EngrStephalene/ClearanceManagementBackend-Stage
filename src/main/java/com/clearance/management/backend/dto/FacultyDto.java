@@ -19,6 +19,10 @@ public class FacultyDto {
 
     private String facultyOffice;
 
+    private String gender;
+
+    private String birthday;
+
     public FacultyDto() {
     }
 
@@ -92,5 +96,21 @@ public class FacultyDto {
 
     public void setFacultyOffice(String facultyOffice) {
         this.facultyOffice = facultyOffice;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }
