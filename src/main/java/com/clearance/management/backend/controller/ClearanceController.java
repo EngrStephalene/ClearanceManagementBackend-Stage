@@ -74,6 +74,7 @@ public class ClearanceController {
     @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
             " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
             "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @DeleteMapping("{studentId}")
     public ResponseEntity<String> deleteClearanceByStudentId(@PathVariable("studentId") Integer studentId) {
@@ -104,7 +105,11 @@ public class ClearanceController {
         return new ResponseEntity<>(updatedClearance, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT', STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
+            " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +
+            " 'STUDENT', 'STUDENT_SG_PRESIDENT', 'STUDENT_DEPARTMENT_GOV', " +
+            "'FINANCE', 'COLLEGE_DEAN', 'SCHOOL_DIRECTOR', 'DEPARTMENT_CHAIRMAN', 'SG_ADVISER')")
     @PostMapping("/add")
     public ResponseEntity<List<ClearanceDto>> addClearance(@RequestBody ClearanceRequest request) {
         List<ClearanceDto> savedClearance = clearanceService.addClearance(request);
