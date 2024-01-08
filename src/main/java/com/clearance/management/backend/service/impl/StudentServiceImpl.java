@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,10 +81,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentDto> getAllStudent() {
         List<Student> studentList = studentRepository.findAll();
-        return studentList
-                .stream()
-                .map((student) -> modelMapper.map(student, StudentDto.class))
-                .collect(Collectors.toList());
+        List<StudentDto> studentDtoList = new ArrayList<>();
+        for(Student student: studentList) {
+            StudentDto studentDto = modelMapper.map(student, StudentDto.class);
+            if(studentDto.getYearLevel() != null && !studentDto.getYearLevel().isEmpty()) {
+                switch (studentDto.getYearLevel()) {
+                    case "First" -> studentDto.setYearLevel("I");
+                    case "Second" -> studentDto.setYearLevel("II");
+                    case "Thirs" -> studentDto.setYearLevel("III");
+                    case "Fourth" -> studentDto.setYearLevel("IV");
+                }
+            }
+
+            studentDtoList.add(studentDto);
+        }
+        return studentDtoList;
     }
 
     @Override
