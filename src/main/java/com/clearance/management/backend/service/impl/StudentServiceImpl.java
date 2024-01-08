@@ -48,6 +48,12 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto addStudent(StudentDto request) {
         //SET THE VIOLATION OBJECT TO NULL
         request.setViolations(null);
+        if(request.getBirthday() != null && !request.getBirthday().isEmpty()) {
+            String[] birthDate = request.getBirthday().split("T");
+            String date = birthDate[0];
+            request.setBirthday(date);
+        }
+
         Student student = modelMapper.map(request, Student.class);
 
         //Set the application user information
