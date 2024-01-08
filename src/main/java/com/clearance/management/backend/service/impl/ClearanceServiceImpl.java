@@ -125,7 +125,8 @@ public class ClearanceServiceImpl implements ClearanceService {
             clearanceDtoWithStudentName.setLogDate(clearance.getLogDate());
         }
         if(clearance.getApprovedDate() != null) {
-            clearanceDtoWithStudentName.setApprovedDate(clearance.getApprovedDate());
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd , yyyy");
+            clearanceDtoWithStudentName.setApprovedDate(formatter.format(clearance.getApprovedDate()));
         }
         if(clearance.getReason() != null) {
             clearanceDtoWithStudentName.setReason(clearance.getReason());
@@ -175,7 +176,8 @@ public class ClearanceServiceImpl implements ClearanceService {
                     .orElseThrow(() -> new ResourceNotFoundException("User not found."));
             Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
                     .orElseThrow(() -> new ResourceNotFoundException("Faculty not found"));
-            if(!faculty.getFacultyOffice().equals("Admin")) {
+            if(faculty.getFacultyOffice() != null &&
+                    !faculty.getFacultyOffice().equals("Admin")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd , yyyy");
                 if(clearance.getApprovedDate() != null) {
                     clearanceWithFacultyDTO.setApprovedDate(formatter.format(clearance.getApprovedDate()));

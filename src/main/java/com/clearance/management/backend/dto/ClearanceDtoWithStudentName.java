@@ -16,7 +16,7 @@ public class ClearanceDtoWithStudentName {
 
     private String facultyId;
 
-    private Date approvedDate;
+    private String approvedDate;
 
     private Set<Faculty> approvers;
 
@@ -79,11 +79,11 @@ public class ClearanceDtoWithStudentName {
         this.facultyId = facultyId;
     }
 
-    public Date getApprovedDate() {
+    public String getApprovedDate() {
         return approvedDate;
     }
 
-    public void setApprovedDate(Date approvedDate) {
+    public void setApprovedDate(String approvedDate) {
         this.approvedDate = approvedDate;
     }
 
