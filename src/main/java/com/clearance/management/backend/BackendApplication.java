@@ -101,30 +101,39 @@ public class BackendApplication {
 
 			ApplicationUser admin = new ApplicationUser("admin", passwordEncode.encode("adminPassword"), "tanstephalene@gmail.com", adminRoles);
 			adminFaculty.setApplicationUser(admin);
+			adminFaculty.setFacultyOffice("Admin");
 
 			ApplicationUser campusMinister = new ApplicationUser("munez.janjan", passwordEncode.encode("john123"), "munezjanjan@gmail.com", campusMinistryRoles);
 			campusMinistry.setApplicationUser(campusMinister);
+			campusMinistry.setFacultyOffice("Campus Ministry");
 
 			ApplicationUser guidance = new ApplicationUser("benlot.lyn", passwordEncode.encode("lyn123"), "lynbenlot93@gmail.com", guidanceOfficeRoles);
 			guidanceOffice.setApplicationUser(guidance);
+			guidanceOffice.setFacultyOffice("Guidance");
 
 			ApplicationUser librarian = new ApplicationUser("laguatan.hector", passwordEncode.encode("hector123"), "hectorlaguatan9@gmail.com", librarianRoles);
 			libraryOffice.setApplicationUser(librarian);
+			libraryOffice.setFacultyOffice("Library In-Charge");
 
 			ApplicationUser dispensary = new ApplicationUser("balansag.mabelle", passwordEncode.encode("mabelle123"), "dumasapalmabelle@gmail.com", dispensaryRoles);
 			dispensaryOffice.setApplicationUser(dispensary);
+			dispensaryOffice.setFacultyOffice("Dispensary In-Charge");
 
 			ApplicationUser propertyCustodian = new ApplicationUser("mur.jojo", passwordEncode.encode("jojo123"), "jojomurcilla@gmail.com", propertyCustodianRoles);
 			propertyCustodianOffice.setApplicationUser(propertyCustodian);
+			propertyCustodianOffice.setFacultyOffice("Property Custodian");
 
 			ApplicationUser prefectOfDiscipline = new ApplicationUser("oliver.john", passwordEncode.encode("oliver123"), "arombooliver@gmail.com", prefectOfDisciplineRoles);
 			prefectOfDisciplineOffice.setApplicationUser(prefectOfDiscipline);
+			prefectOfDisciplineOffice.setFacultyOffice("Prefect of Discipline");
 
 			ApplicationUser registrar = new ApplicationUser("balansag.carl", passwordEncode.encode("carl123"), "balansagcarlo01@gmail.com", registrarRoles);
 			registrarOffice.setApplicationUser(registrar);
+			registrarOffice.setFacultyOffice("Registrar");
 
 			ApplicationUser finance = new ApplicationUser("labrador.zekiah", passwordEncode.encode("zekiah123"), "zekiahpagao@gmail.com", financeRoles);
 			financeOffice.setApplicationUser(finance);
+			financeOffice.setFacultyOffice("Finance");
 
 			System.out.println(admin);
 			facultyRepository.save(adminFaculty);
