@@ -2,20 +2,15 @@ package com.clearance.management.backend.request;
 
 public class FacultyRequest {
     private Integer facultyId;
-
     private String facultyNumber;
-
     private String firstName;
-
     private String middleName;
-
     private String lastName;
-
     private String address;
-
     private String email;
-
     private String role;
+    private String gender;
+    private String birthday;
 
     public FacultyRequest() {
     }
@@ -82,5 +77,21 @@ public class FacultyRequest {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }
