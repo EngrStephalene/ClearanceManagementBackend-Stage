@@ -1,5 +1,6 @@
 package com.clearance.management.backend.service;
 import com.clearance.management.backend.dto.StudentDto;
+import com.clearance.management.backend.entity.Student;
 import com.clearance.management.backend.request.UpdateStudentRequest;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface StudentService {
     public StudentDto getStudentInfoBasedOnUserId(Integer userId);
     public String getStudentNumberByUserId(Integer userId);
     public String getStudentNameByUserId(Integer userId);
+    public List<StudentDto> addAllStudents(List<StudentDto> request);
 }

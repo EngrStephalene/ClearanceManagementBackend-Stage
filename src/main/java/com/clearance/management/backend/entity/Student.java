@@ -45,6 +45,9 @@ public class Student {
     @Column(name = "year_level")
     private String yearLevel;
 
+    @Column(name = "course")
+    private String course;
+
     @Column(name = "birthday")
     private String birthday;
 
@@ -148,5 +151,13 @@ public class Student {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 }

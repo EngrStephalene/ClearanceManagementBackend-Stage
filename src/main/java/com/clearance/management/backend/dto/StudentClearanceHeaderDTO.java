@@ -1,9 +1,10 @@
 package com.clearance.management.backend.dto;
 
 public class StudentClearanceHeaderDTO {
-    String studentName;
-    String yearLevel;
-    String purpose;
+    private String studentName;
+    private String yearLevel;
+    private String course;
+    private String purpose;
 
     public String getStudentName() {
         return studentName;

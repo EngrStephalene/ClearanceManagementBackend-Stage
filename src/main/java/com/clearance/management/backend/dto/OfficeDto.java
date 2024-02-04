@@ -1,27 +1,11 @@
-package com.clearance.management.backend.entity;
+package com.clearance.management.backend.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "offices")
-public class Offices {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @Column(name = "name")
+public class OfficeDto {
+    Integer id;
     private String name;
-
-    @Column(name = "isOfficeHeadAssigned")
     private Integer isOfficeHeadAssigned;
 
-    public Offices() {
-    }
-
-    public Offices(String name, Integer isOfficeHeadAssigned) {
-        this.name = name;
-        this.isOfficeHeadAssigned = isOfficeHeadAssigned;
+    public OfficeDto() {
     }
 
     public Integer getId() {

@@ -82,8 +82,10 @@ public class FacultyServiceImpl implements FacultyService {
         if(request.getBirthday() != null && !request.getBirthday().isEmpty()) {
             String[] birthDate = request.getBirthday().split("T");
             String date = birthDate[0];
-            facultyDto.setBirthday(date);
+            facultyDto.setBirthday(request.getBirthday());
         }
+
+        facultyDto.setBirthday(request.getBirthday());
 
         AppUserDto appUserDto = authenticationService.registerFacultyHead(facultyDto.getFirstName(), facultyDto.getLastName(), facultyDto.getEmail(), request.getRole());
         ApplicationUser facultyHeadDetl = modelMapper.map(appUserDto, ApplicationUser.class);

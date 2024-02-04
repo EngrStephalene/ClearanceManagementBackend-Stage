@@ -95,6 +95,17 @@ public class StudentController {
         return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY', 'FACULTY_HEAD'," +
+            " 'TREASURER', 'CHAIRMAN', 'SG_ADVISER', 'CAMPUS_MINISTRY', " +
+            "'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
+            "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', 'FINANCE')")
+    @PostMapping("/add-students")
+    public ResponseEntity<List<StudentDto>> addAllStudent(@RequestBody List<StudentDto> request) {
+        System.out.println("ADD ALL STUDENTS api is called.");
+        List<StudentDto> savedStudents = studentService.addAllStudents(request);
+        return new ResponseEntity<>(savedStudents, HttpStatus.OK);
+    }
+
     @PreAuthorize("hasAnyRole('ADMIN', 'FACULTY'," +
             " 'CAMPUS_MINISTRY', 'GUIDANCE_OFFICE', 'LIBRARIAN', 'DISPENSARY', " +
             "'PROPERTY_CUSTODIAN', 'PREFECT_DISCIPLINE', 'REGISTRAR', " +

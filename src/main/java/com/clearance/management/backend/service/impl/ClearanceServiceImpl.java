@@ -176,8 +176,7 @@ public class ClearanceServiceImpl implements ClearanceService {
                     .orElseThrow(() -> new ResourceNotFoundException("User not found."));
             Faculty faculty = facultyRepository.findFacultyByUserId(applicationUser)
                     .orElseThrow(() -> new ResourceNotFoundException("Faculty not found"));
-            if(faculty.getFacultyOffice() != null &&
-                    !faculty.getFacultyOffice().equals("Admin")) {
+            if(!faculty.getFacultyOffice().equals("Admin")) {
                 SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd , yyyy");
                 if(clearance.getApprovedDate() != null) {
                     clearanceWithFacultyDTO.setApprovedDate(formatter.format(clearance.getApprovedDate()));

@@ -17,11 +17,11 @@ public class FacultyDto {
 
     private String email;
 
-    private String facultyOffice;
+    private String birthday;
 
     private String gender;
 
-    private String birthday;
+    private String facultyOffice;
 
     public FacultyDto() {
     }
@@ -98,19 +98,19 @@ public class FacultyDto {
         this.facultyOffice = facultyOffice;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
     public String getBirthday() {
         return birthday;
     }
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

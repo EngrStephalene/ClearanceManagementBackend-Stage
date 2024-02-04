@@ -18,6 +18,7 @@ public class StudentDto {
     private Set<Violation> violations;
     private String gender;
     private String yearLevel;
+    private String course;
     private String birthday;
     private Integer departmentId;
 
@@ -126,5 +127,13 @@ public class StudentDto {
 
     public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 }

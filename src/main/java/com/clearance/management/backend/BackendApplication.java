@@ -2,9 +2,11 @@ package com.clearance.management.backend;
 
 import com.clearance.management.backend.entity.ApplicationUser;
 import com.clearance.management.backend.entity.Faculty;
+import com.clearance.management.backend.entity.Offices;
 import com.clearance.management.backend.entity.Role;
 import com.clearance.management.backend.repository.ApplicationUserRepository;
 import com.clearance.management.backend.repository.FacultyRepository;
+import com.clearance.management.backend.repository.OfficeRepository;
 import com.clearance.management.backend.repository.RoleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
@@ -12,8 +14,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
@@ -36,7 +41,8 @@ public class BackendApplication {
 	 * @return
 	 */
 	@Bean
-	CommandLineRunner run(RoleRepository roleRepository, ApplicationUserRepository userRepository, FacultyRepository facultyRepository, PasswordEncoder passwordEncode){
+	CommandLineRunner run(RoleRepository roleRepository, ApplicationUserRepository userRepository,
+						  FacultyRepository facultyRepository, PasswordEncoder passwordEncode, OfficeRepository officeRepository){
 		System.out.println("command line runner");
 		return args ->{
 			if(roleRepository.findByAuthority("ROLE_ADMIN").isPresent()) return;
@@ -101,39 +107,30 @@ public class BackendApplication {
 
 			ApplicationUser admin = new ApplicationUser("admin", passwordEncode.encode("adminPassword"), "tanstephalene@gmail.com", adminRoles);
 			adminFaculty.setApplicationUser(admin);
-			adminFaculty.setFacultyOffice("Admin");
 
 			ApplicationUser campusMinister = new ApplicationUser("munez.janjan", passwordEncode.encode("john123"), "munezjanjan@gmail.com", campusMinistryRoles);
 			campusMinistry.setApplicationUser(campusMinister);
-			campusMinistry.setFacultyOffice("Campus Ministry");
 
 			ApplicationUser guidance = new ApplicationUser("benlot.lyn", passwordEncode.encode("lyn123"), "lynbenlot93@gmail.com", guidanceOfficeRoles);
 			guidanceOffice.setApplicationUser(guidance);
-			guidanceOffice.setFacultyOffice("Guidance");
 
 			ApplicationUser librarian = new ApplicationUser("laguatan.hector", passwordEncode.encode("hector123"), "hectorlaguatan9@gmail.com", librarianRoles);
 			libraryOffice.setApplicationUser(librarian);
-			libraryOffice.setFacultyOffice("Library In-Charge");
 
 			ApplicationUser dispensary = new ApplicationUser("balansag.mabelle", passwordEncode.encode("mabelle123"), "dumasapalmabelle@gmail.com", dispensaryRoles);
 			dispensaryOffice.setApplicationUser(dispensary);
-			dispensaryOffice.setFacultyOffice("Dispensary In-Charge");
 
 			ApplicationUser propertyCustodian = new ApplicationUser("mur.jojo", passwordEncode.encode("jojo123"), "jojomurcilla@gmail.com", propertyCustodianRoles);
 			propertyCustodianOffice.setApplicationUser(propertyCustodian);
-			propertyCustodianOffice.setFacultyOffice("Property Custodian");
 
 			ApplicationUser prefectOfDiscipline = new ApplicationUser("oliver.john", passwordEncode.encode("oliver123"), "arombooliver@gmail.com", prefectOfDisciplineRoles);
 			prefectOfDisciplineOffice.setApplicationUser(prefectOfDiscipline);
-			prefectOfDisciplineOffice.setFacultyOffice("Prefect of Discipline");
 
 			ApplicationUser registrar = new ApplicationUser("balansag.carl", passwordEncode.encode("carl123"), "balansagcarlo01@gmail.com", registrarRoles);
 			registrarOffice.setApplicationUser(registrar);
-			registrarOffice.setFacultyOffice("Registrar");
 
 			ApplicationUser finance = new ApplicationUser("labrador.zekiah", passwordEncode.encode("zekiah123"), "zekiahpagao@gmail.com", financeRoles);
 			financeOffice.setApplicationUser(finance);
-			financeOffice.setFacultyOffice("Finance");
 
 			System.out.println(admin);
 			facultyRepository.save(adminFaculty);
@@ -145,6 +142,34 @@ public class BackendApplication {
 			facultyRepository.save(prefectOfDisciplineOffice);
 			facultyRepository.save(registrarOffice);
 			facultyRepository.save(financeOffice);
+
+			Offices officeDeptChair = new Offices("Department Chairman", 0);
+			Offices officeCollegeDean =  new Offices("College Dean", 0);
+			Offices officeSchoolDirector = new Offices("School Director", 0);
+			Offices officeSGAdviser = new Offices("SG Adviser", 0);
+			Offices officeCampusMinistry = new Offices("Campus Ministry", 1);
+			Offices officeGuidanceOffice = new Offices("Guidance Office", 1);
+			Offices officeLibraryInCharge = new Offices("Library in Charge",1);
+			Offices officeDispensaryInCharge = new Offices("Dispensary in  Charge", 1);
+			Offices officePropertyCustodian = new Offices("Property Custodian", 1);
+			Offices officePrefectOfDiscipline = new Offices("Prefect of Discipline", 1);
+			Offices officeRegistrar = new Offices("Registrar", 1);
+			Offices officeFinance = new Offices("Finance", 1);
+
+			List<Offices> officesForAdd = new ArrayList<>();
+			officesForAdd.add(officeDeptChair);
+			officesForAdd.add(officeCollegeDean);
+			officesForAdd.add(officeSchoolDirector);
+			officesForAdd.add(officeSGAdviser);
+			officesForAdd.add(officeCampusMinistry);
+			officesForAdd.add(officeGuidanceOffice);
+			officesForAdd.add(officeLibraryInCharge);
+			officesForAdd.add(officeDispensaryInCharge);
+			officesForAdd.add(officePropertyCustodian);
+			officesForAdd.add(officePrefectOfDiscipline);
+			officesForAdd.add(officeRegistrar);
+			officesForAdd.add(officeFinance);
+			officeRepository.saveAll(officesForAdd);
 		};
 	}
 

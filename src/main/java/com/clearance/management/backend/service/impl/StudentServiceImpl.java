@@ -18,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,11 +50,10 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto addStudent(StudentDto request) {
         //SET THE VIOLATION OBJECT TO NULL
         request.setViolations(null);
-        if(request.getBirthday() != null && !request.getBirthday().isEmpty()) {
-            String[] birthDate = request.getBirthday().split("T");
-            String date = birthDate[0];
-            request.setBirthday(date);
-        }
+
+        String[] birthDate = request.getBirthday().split("T");
+        String date = birthDate[0];
+        request.setBirthday(date);
 
         Student student = modelMapper.map(request, Student.class);
 
@@ -79,23 +79,46 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<StudentDto> getAllStudent() {
-        List<Student> studentList = studentRepository.findAll();
-        List<StudentDto> studentDtoList = new ArrayList<>();
-        for(Student student: studentList) {
-            StudentDto studentDto = modelMapper.map(student, StudentDto.class);
-            if(studentDto.getYearLevel() != null && !studentDto.getYearLevel().isEmpty()) {
-                switch (studentDto.getYearLevel()) {
-                    case "First" -> studentDto.setYearLevel("I");
-                    case "Second" -> studentDto.setYearLevel("II");
-                    case "Third" -> studentDto.setYearLevel("III");
-                    case "Fourth" -> studentDto.setYearLevel("IV");
+    public List<StudentDto> addAllStudents(List<StudentDto> request) {
+        List<StudentDto> savedStudents = new ArrayList<>();
+        if(!CollectionUtils.isEmpty(request)) {
+            for(StudentDto studentRequest: request) {
+                if(studentRequest.getStudentNumber() != null
+                        && studentRequest.getFirstName() != null && studentRequest.getLastName() != null) {
+                    studentRequest.setViolations(null);
+                    Student student = modelMapper.map(studentRequest, Student.class);
+
+                    //Set the application user information
+                    AppUserDto appUserDto =  authenticationService.registerStudent(student.getFirstName(), student.getLastName(), student.getEmail());
+                    ApplicationUser studentAppDetl = modelMapper.map(appUserDto, ApplicationUser.class);
+
+                    //Save to database
+                    student.setApplicationUser(studentAppDetl);
+                    Student savedStudent = studentRepository.save(student);
+
+                    //Send an email to student with his user credentials
+                    StringBuffer str = new StringBuffer();
+                    str.append(savedStudent.getFirstName());
+                    str.append(" ");
+                    str.append(savedStudent.getLastName());
+                    String studentName = str.toString();
+                    String pass = authenticationService.getPassword();
+                    System.out.println(pass);
+                    emailService.studentAccountVerifEmail(studentName, savedStudent.getEmail(), studentAppDetl.getUsername(), pass);
+                    savedStudents.add(modelMapper.map(savedStudents, StudentDto.class));
                 }
             }
-
-            studentDtoList.add(studentDto);
         }
-        return studentDtoList;
+        return savedStudents;
+    }
+
+    @Override
+    public List<StudentDto> getAllStudent() {
+        List<Student> studentList = studentRepository.findAll();
+        return studentList
+                .stream()
+                .map((student) -> modelMapper.map(student, StudentDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override

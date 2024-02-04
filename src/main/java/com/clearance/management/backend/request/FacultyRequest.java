@@ -2,14 +2,23 @@ package com.clearance.management.backend.request;
 
 public class FacultyRequest {
     private Integer facultyId;
+
     private String facultyNumber;
+
     private String firstName;
+
     private String middleName;
+
     private String lastName;
+
     private String address;
+
     private String email;
+
     private String role;
+
     private String gender;
+
     private String birthday;
 
     public FacultyRequest() {
